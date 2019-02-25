@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 
@@ -8,40 +9,47 @@ namespace SDSFoundation.Interfaces.Content.ContentModel
 
     public class ContentEnums
     {
-
-        public enum PlayState : int
+        [DefaultValue(0)]
+        public enum PlayState
         {
-            Playing = 1,
-            Paused = 2,
-            Stopped = 3
+            Undefined,
+            Playing,
+            Paused,
+            Stopped
         };
 
-        public enum PlayDirection : int
+        [DefaultValue(0)]
+        public enum PlayDirection
         {
-            Forward = 1,
-            Reverse = 2
+            Undefined,
+            Forward,
+            Reverse
         }
 
-        public enum ContentCategory : int
+        [DefaultValue(0)]
+        public enum ContentCategory
         {
+            Undefined,
             /// <summary>
             /// Live indicates playing live streaming content
             /// </summary>
-            Live = 1,
+            Live,
             /// <summary>
             /// RemoteReview indicates playing historical content from a remote device
             /// </summary>
-            Review = 2,
+            Review,
             /// <summary>
             /// Archive indicates playing from a file system
             /// </summary>
-            File = 3
+            File
         }
 
-        public enum ContentType : int
+        [DefaultValue(0)]
+        public enum ContentType
         {
-            Audio = 0,
-            Video = 1
+            Undefined,
+            Audio,
+            Video
         };
     }
 }

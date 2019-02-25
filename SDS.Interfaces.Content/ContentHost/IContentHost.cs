@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using static SDSFoundation.Interfaces.Content.ContentModel.ContentEnums;
@@ -12,16 +13,18 @@ namespace SDSFoundation.Interfaces.Content.ContentHost
     /// A device might not necessarily be video content.  It could also contain audio content or both
     /// </summary>
     public interface IContentHost<TContent> 
-        where TContent : IContent<IContentActions, IContentProperties, IContentEvents>
+        where TContent : IContent
     {
         /// <summary>
         /// User friendly name
         /// </summary>
+        [DefaultValue("")]
         string Name { get; }
 
         /// <summary>
         /// User friendly description
         /// </summary>
+        [DefaultValue("")]
         string Description { get; }
 
         /// <summary>
@@ -32,6 +35,7 @@ namespace SDSFoundation.Interfaces.Content.ContentHost
         /// <summary>
         /// Ganz, Geovision, etc
         /// </summary>
+        [DefaultValue("")]
         string Manufacturer { get; }
 
         /// <summary>
@@ -42,6 +46,7 @@ namespace SDSFoundation.Interfaces.Content.ContentHost
         /// <summary>
         /// Version 1.1, 2.0, etc.  
         /// </summary>
+        [DefaultValue(0)]
         decimal ContentVersion { get; }
 
         /// <summary>
@@ -71,6 +76,7 @@ namespace SDSFoundation.Interfaces.Content.ContentHost
         /// <summary>
         /// Indicates if the content is successfully connected to a device
         /// </summary>
+        [DefaultValue(false)]
         Boolean IsConnected { get; }
 
         /// <summary>

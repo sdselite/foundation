@@ -8,7 +8,7 @@ using System.Web.Mvc;
 namespace SDSFoundation.Interfaces.Content.UserInterface
 {
     interface IMVCController<TContent> : IController, IContentHost<TContent>
-    where TContent : IContent<IContentActions, IContentProperties, IContentEvents>
+    where TContent : IContent
     {
         
     }

@@ -10,6 +10,8 @@ namespace SDSFoundation.Interfaces.Content
 {
     public interface IContentEvents
     {
+        void InitializeEvents();
+
         /// <summary>
         /// OnPlayTimeChanged is raised whenever the current time of the content changes
         /// </summary>

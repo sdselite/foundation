@@ -70,6 +70,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserInterface\IMVCController.cs" />
     <Compile Include="UserInterface\IWPFUserControl.cs" />
+    <Compile Include="Video\IVideoContent.cs" />
     <Compile Include="Video\IVideoContentActions.cs" />
     <Compile Include="Video\IVideoContentEvents.cs" />
   </ItemGroup>

@@ -12,7 +12,7 @@ namespace SDSFoundation.Interfaces.Content.UserInterface
         
     interface IWPFUserControl<TUserControl, TContent>  : IContentHost<TContent>
     where TUserControl : UIElement
-    where TContent : IContent<IContentActions, IContentProperties, IContentEvents>
+    where TContent : IContent
     {
 
     }

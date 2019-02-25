@@ -39,7 +39,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Enumerations\LayoutTypes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SDS.Interfaces.Content\SDSFoundation.Interfaces.Content.csproj">
+      <Project>{9f71c068-792a-4c22-bccd-bddec9b246f3}</Project>
+      <Name>SDSFoundation.Interfaces.Content</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,0 +1,33 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <Product>SDSFoundation.ExtensionMethods.NetCore</Product>
+    <Description>SDS Foundation Code - Extension Methods compiled for .NET core</Description>
+    <PackageId>SDSFoundation.ExtensionMethods.NetCore</PackageId>
+    <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
+    <PackageReleaseNotes>SDS Foundation Code - Extension Methods compiled for .NET core.
+
+Downgraded to NetCore 2.0</PackageReleaseNotes>
+    <Version>1.0.1</Version>
+    <PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
+    <Company>SDSFoundation.ExtensionMethods.NetCore</Company>
+    <Authors>SDSFoundation.ExtensionMethods.NetCore</Authors>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\SDSFoundation.ExtensionMethods\Security\Claims\ClaimsPrincipalExtensions.cs" Link="Security\Claims\ClaimsPrincipalExtensions.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Network\" />
+    <Folder Include="Threading\" />
+    <Folder Include="Schedule\" />
+    <Folder Include="Security\Claims\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SDSFoundation.Model.Security.NETCore\SDSFoundation.Model.Security.NETCore.csproj" />
+  </ItemGroup>
+
+</Project>

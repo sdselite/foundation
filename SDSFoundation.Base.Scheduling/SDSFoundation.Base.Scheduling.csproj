@@ -4,12 +4,12 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{D6663F9E-2E52-4D2D-A8D8-065E8BAB77EA}</ProjectGuid>
+    <ProjectGuid>{B5CE46EB-5CF2-42F8-9576-3A7BF9F64AF8}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SDSFoundation.Model.Schedule</RootNamespace>
-    <AssemblyName>SDSFoundation.Model.Schedule</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <RootNamespace>SDSFoundation.Base.Scheduling</RootNamespace>
+    <AssemblyName>SDSFoundation.Base.Scheduling</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
   </PropertyGroup>
@@ -37,15 +37,11 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Enumerations\ApplicationEventTypes.cs" />
-    <Compile Include="Enumerations\JobStatusCodes.cs" />
-    <Compile Include="Enumerations\ScheduleTypes.cs" />
-    <Compile Include="Enumerations\Timezones.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

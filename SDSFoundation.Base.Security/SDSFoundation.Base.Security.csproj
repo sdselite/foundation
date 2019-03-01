@@ -1,0 +1,106 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{CFF8CA2C-0BC2-4424-B130-7C0F7975D236}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SDSFoundation.Base.Security</RootNamespace>
+    <AssemblyName>SDSFoundation.Base.Security</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="DocsByReflection, Version=1.0.8.0, Culture=neutral, PublicKeyToken=64d1e8338525e7be, processorArchitecture=MSIL">
+      <HintPath>..\packages\DocsByReflection.1.0.11\lib\net40\DocsByReflection.dll</HintPath>
+    </Reference>
+    <Reference Include="HelperSharp, Version=1.0.5560.27038, Culture=neutral, PublicKeyToken=3d44152485e1a4e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\HelperSharp.0.0.4.2\lib\net35\HelperSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebApiProxy.CSharp.1.3.6021.11899\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.Extensions.Compression.Client, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Net.Http.Extensions.Compression.Client.2.0.5\lib\portable-net45+wp8+wpa81+win8+monoandroid+monotouch+Xamarin.iOS+Xamarin.Mac\System.Net.Http.Extensions.Compression.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Extensions.Compression.Core, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Net.Http.Extensions.Compression.Client.2.0.5\lib\portable-net45+wp8+wpa81+win8+monoandroid+monotouch+Xamarin.iOS+Xamarin.Mac\System.Net.Http.Extensions.Compression.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebApiProxy.CSharp.1.3.6021.11899\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http, Version=5.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.2\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WebApiProxy.Core, Version=1.3.6021.11899, Culture=neutral, PublicKeyToken=6d05901e523675b1, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebApiProxy.CSharp.1.3.6021.11899\lib\net45\WebApiProxy.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="WebApiProxy.Server, Version=1.3.6021.8370, Culture=neutral, PublicKeyToken=e027108dc78234fa, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebApiProxy.1.3.6021.8370\lib\net45\WebApiProxy.Server.dll</HintPath>
+    </Reference>
+    <Reference Include="WebApiProxy.Tasks, Version=1.3.6021.11899, Culture=neutral, PublicKeyToken=e5f1ff9f00b5d4dc, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebApiProxy.CSharp.1.3.6021.11899\lib\net45\WebApiProxy.Tasks.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WebApiProxy\WebApiProxy.generated.cs" />
+    <Compile Include="WebApi\Proxy\Client\ClientBase.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+    <None Include="WebApiProxy\WebApiProxy.config" />
+    <None Include="WebApi\Proxy\Client\WebApiProxy.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="WebApi\Proxy\Server\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SDSFoundation.Model.Security\SDSFoundation.Model.Security.csproj">
+      <Project>{ae0b979e-9022-457a-9b0a-518c1c37ecdc}</Project>
+      <Name>SDSFoundation.Model.Security</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\packages\WebApiProxy.CSharp.1.3.6021.11899\build\WebApiProxy.CSharp.targets" Condition="Exists('..\packages\WebApiProxy.CSharp.1.3.6021.11899\build\WebApiProxy.CSharp.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\WebApiProxy.CSharp.1.3.6021.11899\build\WebApiProxy.CSharp.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\WebApiProxy.CSharp.1.3.6021.11899\build\WebApiProxy.CSharp.targets'))" />
+  </Target>
+</Project>

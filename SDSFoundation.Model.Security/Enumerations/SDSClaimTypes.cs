@@ -1,15 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿
 
 namespace SDSFoundation.Model.Security.Enumerations
 {
-    public enum SDSClaimTypes
+    public enum ClaimType
     {
+        Devices,
+        Email,
         Products,
         ProductRoles,
         TenantGroup,
-        Subscriptions
+        Sites,
+        Subscriptions,
+        Tenants
     }
 }

@@ -5,7 +5,7 @@ namespace SDSFoundation.ExtensionMethods.Security.Claims
 {
     public static class ClaimsPrincipalExtensions
     {
-        public static bool HasClaim(this ClaimsPrincipal principal, SDSClaimTypes type, string value)
+        public static bool HasClaim(this ClaimsPrincipal principal, ClaimType type, string value)
         {
             return principal.HasClaim(type.ToString(), value);
         }

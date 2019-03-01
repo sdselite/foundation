@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<package>
+  <metadata>
+    <!--*-->
+    <id>SDSFoundation.ExtensionMethods</id>
+    <!--*-->
+    <version>1.0.1</version>
+    <title>SDSFoundation.ExtensionMethods</title>
+    <!--*-->
+    <authors>Software Development Services, LLC</authors>
+    <owners>Software Development Services, LLC</owners>
+    <!--
+    <licenseUrl></licenseUrl>
+    <projectUrl></projectUrl>
+    <iconUrl></iconUrl>
+-->
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <!--*-->
+    <description>Common extension methods</description>
+    <!--*-->
+    <releaseNotes>Initial non-production release</releaseNotes>
+    <copyright>Copyright ©  2019</copyright>
+    <tags>
+    </tags>
+    <dependencies>
+      <!--
+      <dependency id="SampleDependency" version="1.0" />
+-->
+    </dependencies>
+  </metadata>
+</package>

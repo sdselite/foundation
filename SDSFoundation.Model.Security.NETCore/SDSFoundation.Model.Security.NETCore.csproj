@@ -2,10 +2,19 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
+    <Version>1.0.1</Version>
+    <Product>SDSFoundation.Model.Security.NETCore</Product>
+    <Description>Common Security Model classes</Description>
+    <PackageId>SDSFoundation.Model.Security.NETCore</PackageId>
+    <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
+    <PackageReleaseNotes>Common Security Model classes</PackageReleaseNotes>
+    <PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
+    <Company>SDSFoundation.Model.Security.NETCore</Company>
+    <Authors>SDSFoundation.Model.Security.NETCore</Authors>
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="..\SDSFoundation.Model.Security\Enumerations\SDSClaimTypes.cs" Link="Enumerations\SDSClaimTypes.cs" />
+    <Compile Include="..\SDSFoundation.Model.Security\Enumerations\ClaimType.cs" Link="Enumerations\ClaimType.cs" />
   </ItemGroup>
 
   <ItemGroup>

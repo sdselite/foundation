@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Product>SDSFoundation.Model.Security.NetStandard</Product>
+    <Description>Security Model using .net standard for support across .net frameworks</Description>
+    <PackageId>SDSFoundation.Model.Security.NetStandard</PackageId>
+    <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
+    <PackageReleaseNotes>Security Model using .net standard for support across .net frameworks</PackageReleaseNotes>
+    <Version>1.0.0</Version>
+    <PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
+    <Company>SDSFoundation.Model.Security.NetStandard</Company>
+    <Authors>SDSFoundation.Model.Security.NetStandard</Authors>
+    <RootNamespace>SDSFoundation.Model.Security</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\SDSFoundation.Model.Security\Enumerations\ClaimType.cs" Link="Enumerations\ClaimType.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Enumerations\" />
+  </ItemGroup>
+
+</Project>

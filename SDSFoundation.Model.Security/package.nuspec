@@ -1,26 +1,27 @@
-﻿<?xml version="1.0"?>
+<?xml version="1.0"?>
 <package>
   <metadata>
     <!--*-->
-    <id>$id$</id>
+    <id>SDSFoundation.Model.Security</id>
     <!--*-->
-    <version>$version$</version>
-    <title></title>
+    <version>1.0.0</version>
+    <title>SDSFoundation.Model.Security</title>
     <!--*-->
-    <authors>$author$</authors>
-    <owners>$author$</owners>
-<!--
+    <authors>Software Development Services, LLC</authors>
+    <owners>Software Development Services, LLC</owners>
+    <!--
     <licenseUrl></licenseUrl>
     <projectUrl></projectUrl>
     <iconUrl></iconUrl>
 -->
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <!--*-->
-    <description>$description$</description>
+    <description>Common objects for the SDS security model</description>
     <!--*-->
-    <releaseNotes> </releaseNotes>
-    <copyright>$copyright$</copyright>
-    <tags> </tags>
+    <releaseNotes>Not ready for production.</releaseNotes>
+    <copyright>Copyright ©  2019</copyright>
+    <tags>
+    </tags>
     <dependencies>
       <!--
       <dependency id="SampleDependency" version="1.0" />

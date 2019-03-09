@@ -49,7 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Enumerations\SDSClaimTypes.cs" />
+    <Compile Include="Enumerations\ClaimType.cs" />
     <Compile Include="OpenId\Flows\PasswordFlow.cs" />
     <Compile Include="OpenId\Flows\PasswordFlowCredentials.cs" />
     <Compile Include="OpenId\Flows\PasswordFlowToken.cs" />

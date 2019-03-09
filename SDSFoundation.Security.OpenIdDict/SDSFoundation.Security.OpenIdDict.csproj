@@ -2,6 +2,15 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <Product>SDSFoundation.Security.OpenIdDict</Product>
+    <Description>Used for simple integration between a multi-tenant OpenIdDict based single sign-on solution.  </Description>
+    <PackageId>SDSFoundation.Security.OpenIdDict</PackageId>
+    <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
+    <PackageReleaseNotes>Added first integration: Password flow.</PackageReleaseNotes>
+    <Version>1.0.0</Version>
+    <PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
+    <Company>SDSFoundation.Security.OpenIdDict</Company>
+    <Authors>SDSFoundation.Security.OpenIdDict</Authors>
   </PropertyGroup>
 
   <ItemGroup>

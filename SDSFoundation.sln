@@ -45,8 +45,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SDSFoundation.Interop.Activ
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SDSFoundation.Interfaces.Interop.ActiveX", "SDSFoundation.Interfaces.Interop.ActiveX\SDSFoundation.Interfaces.Interop.ActiveX.csproj", "{ACCBEBB1-69B0-4854-81A5-08A19AD6C588}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SDSFoundation.Model.Security", "SDSFoundation.Model.Security\SDSFoundation.Model.Security.csproj", "{AE0B979E-9022-457A-9B0A-518C1C37ECDC}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SDSFoundation.Model.Device", "SDSFoundation.Model.Device\SDSFoundation.Model.Device.csproj", "{B408DE6A-3EEC-4A6B-B580-2AC644B1F60B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SDSFoundation.Model.Schedule", "SDSFoundation.Model.Schedule\SDSFoundation.Model.Schedule.csproj", "{D6663F9E-2E52-4D2D-A8D8-065E8BAB77EA}"
@@ -75,9 +73,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SDSFoundation.ExtensionMeth
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Security", "Security", "{6F3CD7C3-91BB-40FF-A70A-848626E8AE5C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SDSFoundation.Security.OpenIdDict", "SDSFoundation.Security.OpenIdDict\SDSFoundation.Security.OpenIdDict.csproj", "{CA046884-3F3E-4B30-BF4E-6FC487EFD43D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SDSFoundation.Security.OpenIdDict", "SDSFoundation.Security.OpenIdDict\SDSFoundation.Security.OpenIdDict.csproj", "{CA046884-3F3E-4B30-BF4E-6FC487EFD43D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SDSFoundation.Security.OpenIdDict.Tests", "SDSFoundation.Security.OpenIdDic.Tests\SDSFoundation.Security.OpenIdDict.Tests.csproj", "{AE7CC6C8-B6D5-4300-817B-33D7A1DBE3E8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SDSFoundation.Security.OpenIdDict.Tests", "SDSFoundation.Security.OpenIdDic.Tests\SDSFoundation.Security.OpenIdDict.Tests.csproj", "{AE7CC6C8-B6D5-4300-817B-33D7A1DBE3E8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -117,10 +115,6 @@ Global
 		{ACCBEBB1-69B0-4854-81A5-08A19AD6C588}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ACCBEBB1-69B0-4854-81A5-08A19AD6C588}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ACCBEBB1-69B0-4854-81A5-08A19AD6C588}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AE0B979E-9022-457A-9B0A-518C1C37ECDC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AE0B979E-9022-457A-9B0A-518C1C37ECDC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AE0B979E-9022-457A-9B0A-518C1C37ECDC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AE0B979E-9022-457A-9B0A-518C1C37ECDC}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B408DE6A-3EEC-4A6B-B580-2AC644B1F60B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B408DE6A-3EEC-4A6B-B580-2AC644B1F60B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B408DE6A-3EEC-4A6B-B580-2AC644B1F60B}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -194,7 +188,6 @@ Global
 		{E07CA892-C03A-404E-85A5-3618AB021AB0} = {855F23AF-0152-461E-AFE8-394BC49B62EC}
 		{7CC6AEAB-DAC3-429E-B6FE-1A2E554A86A6} = {855F23AF-0152-461E-AFE8-394BC49B62EC}
 		{ACCBEBB1-69B0-4854-81A5-08A19AD6C588} = {D366F385-2FAB-4FD7-AF05-C3CD07C690B3}
-		{AE0B979E-9022-457A-9B0A-518C1C37ECDC} = {3B2C4138-7A34-44B7-9A25-2988BB31A7D5}
 		{B408DE6A-3EEC-4A6B-B580-2AC644B1F60B} = {3B2C4138-7A34-44B7-9A25-2988BB31A7D5}
 		{D6663F9E-2E52-4D2D-A8D8-065E8BAB77EA} = {3B2C4138-7A34-44B7-9A25-2988BB31A7D5}
 		{58A7D8C0-2615-4B68-B221-F33286A57475} = {D366F385-2FAB-4FD7-AF05-C3CD07C690B3}

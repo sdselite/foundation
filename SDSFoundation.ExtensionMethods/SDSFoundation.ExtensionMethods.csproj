@@ -58,10 +58,6 @@
       <Project>{9F71C068-792A-4C22-BCCD-BDDEC9B246F3}</Project>
       <Name>SDSFoundation.Interfaces.Content</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SDSFoundation.Model.Security\SDSFoundation.Model.Security.csproj">
-      <Project>{AE0B979E-9022-457A-9B0A-518C1C37ECDC}</Project>
-      <Name>SDSFoundation.Model.Security</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="package.nuspec" />

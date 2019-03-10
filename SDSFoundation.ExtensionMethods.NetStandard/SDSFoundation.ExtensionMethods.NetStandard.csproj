@@ -21,8 +21,4 @@
     <Folder Include="Security\Claims\" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\SDSFoundation.Model.Security.NetStandard\SDSFoundation.Model.Security.NetStandard.csproj" />
-  </ItemGroup>
-
 </Project>

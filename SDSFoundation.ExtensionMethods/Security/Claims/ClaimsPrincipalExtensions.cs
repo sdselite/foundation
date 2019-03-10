@@ -1,4 +1,4 @@
-﻿using SDSFoundation.Model.Security.Enumerations;
+﻿
 using System.Linq;
 using System.Security.Claims;
 
@@ -6,11 +6,7 @@ namespace SDSFoundation.ExtensionMethods.Security.Claims
 {
     public static class ClaimsPrincipalExtensions
     {
-        public static bool HasClaim(this ClaimsPrincipal principal, ClaimType type, string value)
-        {
-            return ValidateClaim(principal, type.ToString(), value);
-        }
-
+ 
         public static bool HasClaim(this ClaimsPrincipal principal, string name, string value)
         {
             return ValidateClaim(principal, name, value);

@@ -5,9 +5,9 @@
     <Product>SDSFoundation.Model.Security.NetStandard</Product>
     <Description>Security Model using .net standard for support across .net frameworks</Description>
     <PackageId>SDSFoundation.Model.Security.NetStandard</PackageId>
-    <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <PackageReleaseNotes>Security Model using .net standard for support across .net frameworks</PackageReleaseNotes>
-    <Version>1.0.1</Version>
+    <Version>1.0.3</Version>
     <PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
     <Company>SDSFoundation.Model.Security.NetStandard</Company>
     <Authors>SDSFoundation.Model.Security.NetStandard</Authors>
@@ -19,7 +19,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SDSFoundation.ExtensionMethods.NetStandard\SDSFoundation.ExtensionMethods.NetStandard.csproj" />
+    <ProjectReference Include="..\SDSFoundation.ExtensionMethods.NetStandard\SDSFoundation.ExtensionMethods.NetStandard.csproj">
+      <Private></Private>
+    </ProjectReference>
   </ItemGroup>
 
 </Project>

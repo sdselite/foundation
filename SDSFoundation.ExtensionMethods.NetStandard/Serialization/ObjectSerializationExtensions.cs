@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Xml.Serialization;
-
+using Newtonsoft.Json;
 namespace SDSFoundation.ExtensionMethods.NetStandard.Serialization
 {
     public static class ObjectSerializationExtensions
@@ -17,12 +17,8 @@ namespace SDSFoundation.ExtensionMethods.NetStandard.Serialization
         /// <returns></returns>
         public static string Serialize<T>(this T obj) where T : class
         {
-            var serializer = new XmlSerializer(typeof(T));
-
-            TextWriter writer = new StringWriter();
-            serializer.Serialize(writer, obj);
-
-            return writer.ToString();
+             var jsonString = JsonConvert.SerializeObject(obj);
+            return jsonString;
         }
 
 
@@ -34,11 +30,8 @@ namespace SDSFoundation.ExtensionMethods.NetStandard.Serialization
         /// <returns></returns>
         public static T Deserialize<T>(this string objOfT) where T : class
         {
-            var serializer = new XmlSerializer(typeof(T));
-
-            TextReader reader = new StringReader(objOfT);
-
-            return (T)serializer.Deserialize(reader);
+            var result = JsonConvert.DeserializeObject<T>(objOfT);
+            return result;
         }
 
     }

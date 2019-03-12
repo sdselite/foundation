@@ -5,9 +5,11 @@
     <Product>SDSFoundation.Model.Security.NetStandard</Product>
     <Description>Security Model using .net standard for support across .net frameworks</Description>
     <PackageId>SDSFoundation.Model.Security.NetStandard</PackageId>
-    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
-    <PackageReleaseNotes>Security Model using .net standard for support across .net frameworks</PackageReleaseNotes>
-    <Version>1.0.3</Version>
+    <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
+    <PackageReleaseNotes>Security Model using .net standard for support across .net frameworks.
+Added SecureConfigurationProvider classes to allow for storing encrypted secrets.
+Added SecureProgram based class.</PackageReleaseNotes>
+    <Version>1.0.5</Version>
     <PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
     <Company>SDSFoundation.Model.Security.NetStandard</Company>
     <Authors>SDSFoundation.Model.Security.NetStandard</Authors>
@@ -16,6 +18,9 @@
 
   <ItemGroup>
     <PackageReference Include="CommandLineParser" Version="2.4.3" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="2.2.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="2.2.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.2.0" />
   </ItemGroup>
 
   <ItemGroup>

@@ -15,13 +15,14 @@ namespace SDSFoundation.Security.OpenIdDic.Tests
 
         public const string SiteId = "b4eacb0e-aff5-4888-b4fb-a6ff6df6775a";
         public const string DeviceId = "4525d5aa-43cb-49d4-b678-298b6d280af2";
-
+        public const string TenantId = "f066481c-2cea-47c7-a049-e7ab14ac2038";
 
         [TestMethod]
         public void PasswordFlowTesting_HappyPath()
         {
 
             var credentials = new PasswordFlowCredentials(
+           tenantId: TenantId,
           clientId: ClientId,
           clientSecret: ClientSecret,
           email: UserName,

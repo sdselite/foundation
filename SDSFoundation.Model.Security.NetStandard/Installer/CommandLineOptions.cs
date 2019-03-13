@@ -10,6 +10,10 @@ namespace SDSFoundation.Model.Security.Installer
     /// </summary>
     public class CommandLineOptions
     {
+
+        [Option('t', "tenantid", Required = false, HelpText = "Set the tenant token")]
+        public string TenantId { get; set; }
+
         [Option('a', "auth", Required = false, HelpText = "Set the URL to the OpenId authorization server")]
         public string AuthorizationServer { get; set; }
 
@@ -31,8 +35,10 @@ namespace SDSFoundation.Model.Security.Installer
         [Option("password", Required = false, HelpText = "Set the service account password (Authorization server service account configured in the application, not a Windows service account)")]
         public string Password { get; set; }
 
-        [Option('t', "configtoken", Required = false, HelpText = "Initializes the application using a configuration token which is used to securely configure the initial settings")]
+        [Option("configtoken", Required = false, HelpText = "Initializes the application using a configuration token which is used to securely configure the initial settings")]
         public string ConfigurationToken { get; set; }
+
+
 
         [Option('i', "install", Required = false, HelpText = "Installs as a service using the name provided.  If no service name is provided a default name is used.")]
         public bool Install { get; set; }

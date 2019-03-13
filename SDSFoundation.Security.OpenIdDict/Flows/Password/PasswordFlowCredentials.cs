@@ -6,7 +6,7 @@ namespace SDSFoundation.Security.OpenIdDict.Flows.Password
     public class PasswordFlowCredentials
     {
 
-        public PasswordFlowCredentials(string clientId, string clientSecret, string email, string password, string siteId, string deviceId, string ipAddress)
+        public PasswordFlowCredentials(string tenantId, string clientId, string clientSecret, string email, string password, string siteId, string deviceId, string ipAddress)
         {
             ClientId = clientId;
             ClientSecret = clientSecret;
@@ -15,9 +15,10 @@ namespace SDSFoundation.Security.OpenIdDict.Flows.Password
             SiteId = siteId;
             DeviceId = deviceId;
             IPAddress = ipAddress;
+            TenantId = tenantId;
         }
 
-        public PasswordFlowCredentials(string clientId, string clientSecret, string email, string password, string siteId, string deviceId)
+        public PasswordFlowCredentials(string tenantId, string clientId, string clientSecret, string email, string password, string siteId, string deviceId)
         {
             ClientId = clientId;
             ClientSecret = clientSecret;
@@ -25,6 +26,7 @@ namespace SDSFoundation.Security.OpenIdDict.Flows.Password
             Password = password;
             SiteId = siteId;
             DeviceId = deviceId;
+            TenantId = tenantId;
         }
 
 
@@ -56,6 +58,8 @@ namespace SDSFoundation.Security.OpenIdDict.Flows.Password
         public string Email { get; set; }
         public string Password { get; set; }
         public string SiteId { get; set; }
+        public string TenantId { get; set; }
+
         public string DeviceId { get; set; }
 
         public string IPAddress { get; set; }

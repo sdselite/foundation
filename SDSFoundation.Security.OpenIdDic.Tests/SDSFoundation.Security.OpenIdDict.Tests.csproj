@@ -18,4 +18,8 @@
     <ProjectReference Include="..\SDSFoundation.Security.OpenIdDict\SDSFoundation.Security.OpenIdDict.csproj" />
   </ItemGroup>
 
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="xcopy  &quot;C:\Test\Keys\*.license&quot;  &quot;$(TargetDir)&quot; /s /d /y" />
+  </Target>
+
 </Project>

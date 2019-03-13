@@ -109,6 +109,12 @@ namespace SDSFoundation.Model.Security.Configuration.ConfigurationProviders.Wind
                 hasChanges = true;
             }
 
+            if (string.IsNullOrWhiteSpace(commandLineOptions.TenantId) == false)
+            {
+                fileOptions.TenantId = commandLineOptions.TenantId;
+                hasChanges = true;
+            }
+
             if (string.IsNullOrWhiteSpace(commandLineOptions.ClientId) == false && commandLineOptions.ClientId != fileOptions.ClientId)
             {
                 fileOptions.ClientId = commandLineOptions.ClientId;
@@ -153,6 +159,7 @@ namespace SDSFoundation.Model.Security.Configuration.ConfigurationProviders.Wind
             commandLineOptions.Password = fileOptions.Password;
             commandLineOptions.SiteId = fileOptions.SiteId;
             commandLineOptions.UserName = fileOptions.UserName;
+            commandLineOptions.TenantId = fileOptions.TenantId;
 
             if (hasChanges)
             {
@@ -175,6 +182,7 @@ namespace SDSFoundation.Model.Security.Configuration.ConfigurationProviders.Wind
                 {"Password", commandLineOptions.Password},
                 {"SiteId", commandLineOptions.SiteId},
                 {"UserName", commandLineOptions.UserName},
+                {"TenantId", commandLineOptions.TenantId},
            };
             return secretsDictionary;
         }

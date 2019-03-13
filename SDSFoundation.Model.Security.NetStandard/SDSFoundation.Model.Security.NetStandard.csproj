@@ -7,7 +7,7 @@
     <PackageId>SDSFoundation.Model.Security.NetStandard</PackageId>
     <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
     <PackageReleaseNotes>Moved the base class for SecureProgram to SDSFoundation.Security.OpenIdDict because this is a more logical location (fewer dependencies)</PackageReleaseNotes>
-    <Version>1.0.6.1</Version>
+    <Version>1.0.6.3</Version>
     <PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
     <Company>SDSFoundation.Model.Security.NetStandard</Company>
     <Authors>SDSFoundation.Model.Security.NetStandard</Authors>

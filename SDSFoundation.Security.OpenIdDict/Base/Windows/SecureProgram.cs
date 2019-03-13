@@ -20,7 +20,7 @@ namespace SDSFoundation.Security.OpenIdDict.Base.Windows
         private static IConfigurationRoot Configuration;
         protected static List<Claim> Claims = new List<Claim>();
 
-        public static void InitializeConfiguration(string[] args, string appSettingsFileName = "appsettings.json")
+        public static void InitializeConfiguration(string[] args, string appSettingsFileName = "appsettings.json", int maximumLicenseAge = 7)
         {
 
             CommandLineOptions options = null;
@@ -33,15 +33,17 @@ namespace SDSFoundation.Security.OpenIdDict.Base.Windows
             // Set up configuration sources.
             var builder = new ConfigurationBuilder()
                 .SetBasePath(Path.Combine(AppContext.BaseDirectory))
-                .AddCustomConfiguration(options)
+                .AddCustomConfiguration(options, maximumLicenseAge)
                 .AddJsonFile(appSettingsFileName, optional: true);
 
             Configuration = builder.Build();
 
+            var mySetting = GetSetting("Password");
+
             var userName = Configuration.AsEnumerable().Where(x => x.Key == "UserName").Select(x => x.Value).FirstOrDefault();
         }
 
-        public static void Login(int tokenExpirationSeconds = 3600)
+        public static void Login(int tokenExpirationSeconds = 3600, bool ignoreInvalidCertificate = false)
         {
             var credentials = new PasswordFlowCredentials(
             tenantId: TenantId,
@@ -53,7 +55,7 @@ namespace SDSFoundation.Security.OpenIdDict.Base.Windows
             deviceId: DeviceId);
 
             //Note - when an http client already exists, that httpclient may be passed as a parameter in an overloaded constructor.  Otherwise, an HttpClient will be created for you.
-            PasswordFlow passwordFlow = new PasswordFlow(credentials, AuthorizationServer, tokenExpirationSeconds);
+            PasswordFlow passwordFlow = new PasswordFlow(credentials, AuthorizationServer, tokenExpirationSeconds, ignoreInvalidCertificate);
             var hasValidCredentialsTask = passwordFlow.ValidateCredentials();
             hasValidCredentialsTask.Wait();
 
@@ -75,30 +77,47 @@ namespace SDSFoundation.Security.OpenIdDict.Base.Windows
 
         protected static string GetSetting(string path, string settingName)
         {
-            if (Configuration != null)
+            try
             {
-                var result = Configuration.AsEnumerable().Where(x => x.Key == string.Format("{0}:{1}", path, settingName)).Select(x => x.Value).FirstOrDefault();
+                if (Configuration != null)
+                {
+                    var result = Configuration.AsEnumerable().Where(x => x.Key == string.Format("{0}:{1}", path, settingName)).Select(x => x.Value).FirstOrDefault();
 
-                return result;
+                    return result;
+                }
+                else
+                {
+                    return string.Empty;
+                }
             }
-            else
+            catch (Exception ex)
             {
                 return string.Empty;
             }
+         
         }
 
         private static string GetSetting(string settingName)
         {
-            if (Configuration != null)
+            try
             {
-                var result = Configuration.AsEnumerable().Where(x => x.Key == string.Format("{0}", settingName)).Select(x => x.Value).FirstOrDefault();
+                if (Configuration != null)
+                {
+                    var result = Configuration.AsEnumerable().Where(x => x.Key == string.Format("{0}", settingName)).Select(x => x.Value).FirstOrDefault();
 
-                return result;
+                    return result;
+                }
+                else
+                {
+                    return string.Empty;
+                }
             }
-            else
+            catch (Exception ex)
             {
+
                 return string.Empty;
             }
+            
         }
 
         protected static string Uninstall

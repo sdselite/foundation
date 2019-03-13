@@ -42,22 +42,10 @@ namespace SDSFoundation.Security.OpenIdDict.Tests
         public void TestConfigurationFileAndArgs()
         {
             var args = new List<string>().ToArray();
-             InitializeConfiguration(args, "appsettings.json");
+            InitializeConfiguration(args: args, appSettingsFileName: "appsettings.json", maximumLicenseAge: 3);
 
-            var credentials = new PasswordFlowCredentials(
- tenantId: TenantId,
-clientId: ClientId,
-clientSecret: ClientSecret,
-email: UserName,
-password: Password,
-siteId: SiteId,
-deviceId: DeviceId
-);
+            Login(tokenExpirationSeconds: 3600, ignoreInvalidCertificate: true);
 
-            //Note - when an http client already exists, that httpclient may be passed as a parameter in an overloaded constructor.  Otherwise, an HttpClient will be created for you.
-            PasswordFlow passwordFlow = new PasswordFlow(credentials, AuthorizationServer, 3600);
-            var hasValidCredentialsTask = passwordFlow.ValidateCredentials();
-            hasValidCredentialsTask.Wait();
         }
    
     }

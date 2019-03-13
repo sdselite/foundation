@@ -9,15 +9,17 @@ namespace SDSFoundation.Model.Security.Configuration.ConfigurationProviders.Wind
     class SecureConfigurationSource : IConfigurationSource
     {
         private readonly CommandLineOptions options;
-        public SecureConfigurationSource(CommandLineOptions options)
+        private readonly int maximumLicenseAge;
+        public SecureConfigurationSource(CommandLineOptions options, int maximumLicenseAge = 7)
         {
             this.options = options;
+            this.maximumLicenseAge = maximumLicenseAge;
         }
 
 
         public IConfigurationProvider Build(IConfigurationBuilder builder)
         {
-            return new SecureConfigurationProvider(options);
+            return new SecureConfigurationProvider(options, maximumLicenseAge);
         }
     }
 }

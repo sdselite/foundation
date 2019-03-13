@@ -41,6 +41,7 @@ namespace SDSFoundation.Security.OpenIdDict.Flows.Password
                 }
                 catch (Exception ex)
                 {
+                    Console.WriteLine("Failure at ReadJson: " + ex.Message);
                     //Ignore
                 }
 

@@ -31,7 +31,7 @@ namespace SDSFoundation.Security.OpenIdDic.Tests
           deviceId: DeviceId);
 
             //Note - when an http client already exists, that httpclient may be passed as a parameter in an overloaded constructor.  Otherwise, an HttpClient will be created for you.
-            PasswordFlow passwordFlow = new PasswordFlow(credentials, AuthorizationServer, 3600);
+            PasswordFlow passwordFlow = new PasswordFlow(credentials, AuthorizationServer, 3600, true);
             var hasValidCredentialsTask = passwordFlow.ValidateCredentials();
             hasValidCredentialsTask.Wait();
 

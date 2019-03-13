@@ -8,6 +8,11 @@ using System.Net.Http.Headers;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using SDSFoundation.ExtensionMethods.NetStandard.Serialization;
+using System.Net;
+using System.Runtime.InteropServices;
+using System.Security.Cryptography.X509Certificates;
+using System.Net.Security;
 
 namespace SDSFoundation.Security.OpenIdDict.Flows.Password
 {
@@ -15,15 +20,17 @@ namespace SDSFoundation.Security.OpenIdDict.Flows.Password
     {
         private string openIdConnectPath;
         private PasswordFlowCredentials credentials;
-        private HttpClient client;
+        private bool ignoreInvalidCertificate;
+
         private int tokenExpirationSeconds;
         private string accessToken = string.Empty;
-        public PasswordFlow(HttpClient client, PasswordFlowCredentials credentials, string openIdConnectPath, int tokenExpirationSeconds)
+        public PasswordFlow(HttpClient client, PasswordFlowCredentials credentials, string openIdConnectPath, int tokenExpirationSeconds, bool ignoreInvalidCertificate = false)
         {
             this.openIdConnectPath = openIdConnectPath;
+            this.ignoreInvalidCertificate = ignoreInvalidCertificate;
             this.credentials = credentials;
-            this.client = client;
             this.tokenExpirationSeconds = tokenExpirationSeconds;
+           
         }
 
         /// <summary>
@@ -32,25 +39,62 @@ namespace SDSFoundation.Security.OpenIdDict.Flows.Password
         /// <param name="credentials"></param>
         /// <param name="openIdConnectPath"></param>
         /// <param name="tokenExpirationSeconds"></param>
-        public PasswordFlow(PasswordFlowCredentials credentials, string openIdConnectPath, int tokenExpirationSeconds)
+        public PasswordFlow(PasswordFlowCredentials credentials, string openIdConnectPath, int tokenExpirationSeconds, bool ignoreInvalidCertificate = false)
         {
             this.openIdConnectPath = openIdConnectPath;
+            this.ignoreInvalidCertificate = ignoreInvalidCertificate;
             this.credentials = credentials;
-
-
-
-            var httpClient = new HttpClient()
-            {
-                BaseAddress = new Uri(openIdConnectPath)
-                //BaseAddress = new Uri(Configuration.SiteServicesProxyBaseAddress)
-            };
-
-            httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip"));
-            httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("deflate"));
-
-
-            this.client = httpClient;
             this.tokenExpirationSeconds = tokenExpirationSeconds;
+        }
+
+        private HttpResponseMessage SendHttpRequest(HttpRequestMessage request)
+        {
+
+            if (ignoreInvalidCertificate)
+            {
+                using (var httpClientHandler = new HttpClientHandler())
+                {
+                    httpClientHandler.ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => { return true; };
+
+
+                    using (var client = new HttpClient(httpClientHandler))
+                    {
+                        client.BaseAddress = new Uri(openIdConnectPath);
+                        //AddSiteAndDeviceTokenHeaders(client);
+
+                        var sendAsyncTask = client.SendAsync(request,  HttpCompletionOption.ResponseContentRead);
+                        sendAsyncTask.Wait();
+
+
+                        var responseTextAwaiter = sendAsyncTask.Result.Content.ReadAsStringAsync();
+                        responseTextAwaiter.Wait();
+
+                        var responseText = responseTextAwaiter.Result;
+
+                        return sendAsyncTask.Result;
+                        // Make request here.
+                    }
+                }
+
+
+            }
+            else
+            {
+                var client = new HttpClient() { BaseAddress = new Uri(openIdConnectPath) };
+                //if (request.Method == HttpMethod.Get)
+                //{
+                //    client.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip"));
+                //    client.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("deflate"));
+                //}
+                //AddSiteAndDeviceTokenHeaders(client);
+
+                var sendAsyncTask = client.SendAsync(request, HttpCompletionOption.ResponseContentRead);
+                sendAsyncTask.Wait();
+
+                return sendAsyncTask.Result;
+            }
+
+
         }
 
 
@@ -97,22 +141,21 @@ namespace SDSFoundation.Security.OpenIdDict.Flows.Password
                 var validAccessToken = PasswordFlowTokenCache.Instance.GetValidAccessToken(credentials.ClientId, accessToken, true);
                 if (validAccessToken != null && validAccessToken.IsExpiredOrInvalid == false)
                 {
-                    AddSiteAndDeviceTokenHeaders();
-
+                    //AddSiteAndDeviceTokenHeaders();
 
 
                     return await Task.FromResult<string>(accessToken);
                 }
                 else
                 {
-                    RemoveSiteAndDeviceTokenHeaders();
+                    //RemoveSiteAndDeviceTokenHeaders();
                     return await Task.FromResult<string>(string.Empty);
                 }
 
             }
             else //We already have an unexpired token
             {
-                AddSiteAndDeviceTokenHeaders();
+                //AddSiteAndDeviceTokenHeaders();
                 return await Task.FromResult<string>(accessToken);
             }
 
@@ -139,11 +182,11 @@ namespace SDSFoundation.Security.OpenIdDict.Flows.Password
         }
         private async Task<string> GetUserClaimsJson()
         {
-
-            var request = new HttpRequestMessage(HttpMethod.Get, client.BaseAddress.AbsoluteUri.TrimEnd('/') + "/api/userinfo");
+         
+            var request = new HttpRequestMessage(HttpMethod.Get, openIdConnectPath.TrimEnd('/') + "/api/userinfo");
 
             request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
-            var response = await client.SendAsync(request, HttpCompletionOption.ResponseContentRead);
+            var response =  SendHttpRequest(request);
 
             response.EnsureSuccessStatusCode();
 
@@ -154,9 +197,9 @@ namespace SDSFoundation.Security.OpenIdDict.Flows.Password
 
         }
 
-        private void AddSiteAndDeviceTokenHeaders()
+        private void AddSiteAndDeviceTokenHeaders(HttpClient client)
         {
-
+          
             if (string.IsNullOrWhiteSpace(accessToken) == false)
             {
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
@@ -172,7 +215,10 @@ namespace SDSFoundation.Security.OpenIdDict.Flows.Password
                 {
                     client.DefaultRequestHeaders.Add("ClientIPAddress", credentials.IPAddress);
                 }
-
+                if (client.DefaultRequestHeaders.Contains("TenantToken") == false)
+                {
+                    client.DefaultRequestHeaders.Add("TenantToken", credentials.TenantId);
+                }
 
 
             }
@@ -180,34 +226,37 @@ namespace SDSFoundation.Security.OpenIdDict.Flows.Password
         }
 
 
-        private void RemoveSiteAndDeviceTokenHeaders()
-        {
+        //private void RemoveSiteAndDeviceTokenHeaders()
+        //{
+        //    if (client.DefaultRequestHeaders.Contains("TenantToken"))
+        //    {
+        //        client.DefaultRequestHeaders.Remove("TenantToken");
+        //    }
+        //    if (client.DefaultRequestHeaders.Contains("SiteToken"))
+        //    {
+        //        client.DefaultRequestHeaders.Remove("SiteToken");
+        //    }
+        //    if (client.DefaultRequestHeaders.Contains("DeviceToken"))
+        //    {
+        //        client.DefaultRequestHeaders.Remove("DeviceToken");
+        //    }
+        //    if (client.DefaultRequestHeaders.Contains("ClientIPAddress"))
+        //    {
+        //        client.DefaultRequestHeaders.Remove("ClientIPAddress");
+        //    }
 
-            if (client.DefaultRequestHeaders.Contains("SiteToken"))
-            {
-                client.DefaultRequestHeaders.Remove("SiteToken");
-            }
-            if (client.DefaultRequestHeaders.Contains("DeviceToken"))
-            {
-                client.DefaultRequestHeaders.Remove("DeviceToken");
-            }
-            if (client.DefaultRequestHeaders.Contains("ClientIPAddress"))
-            {
-                client.DefaultRequestHeaders.Remove("ClientIPAddress");
-            }
+        //    if (client.DefaultRequestHeaders.Contains("username"))
+        //    {
+        //        client.DefaultRequestHeaders.Remove("username");
+        //    }
 
-            if (client.DefaultRequestHeaders.Contains("username"))
-            {
-                client.DefaultRequestHeaders.Remove("username");
-            }
-
-            if (client.DefaultRequestHeaders.Contains("password"))
-            {
-                client.DefaultRequestHeaders.Remove("password");
-            }
+        //    if (client.DefaultRequestHeaders.Contains("password"))
+        //    {
+        //        client.DefaultRequestHeaders.Remove("password");
+        //    }
 
 
-        }
+        //}
 
 
         public async Task<bool> ValidateAccessToken(string accessToken)
@@ -224,9 +273,9 @@ namespace SDSFoundation.Security.OpenIdDict.Flows.Password
         }
 
 
-
         private async Task<JObject> GetTokenAsync(PasswordFlowCredentials credentials)
         {
+        
             var request = new HttpRequestMessage(HttpMethod.Post, openIdConnectPath + "/connect/token");
 
             if (string.IsNullOrWhiteSpace(credentials.IPAddress))
@@ -236,21 +285,11 @@ namespace SDSFoundation.Security.OpenIdDict.Flows.Password
             }
 
 
-            var encodedPw = Convert.ToBase64String(
-            System.Text.Encoding.ASCII.GetBytes(
-                 credentials.Password));
-
-            //var decodedPw = Encoding.ASCII.GetString(Convert.FromBase64String(encodedPw));
-            //var decodedPw = Convert.FromBase64String(
-            //System.Text.Encoding.ASCII.G(
-            //     encodedPw));
-
             request.Content = new FormUrlEncodedContent(new Dictionary<string, string>
             {
-
-
                 ["grant_type"] = "password",
                 ["client_id"] = credentials.ClientId,
+                ["tenantId"] = credentials.TenantId,
                 ["client_secret"] = credentials.ClientSecret,
                 ["username"] = Convert.ToBase64String(System.Text.Encoding.ASCII.GetBytes(credentials.Email)),
                 ["password"] = Convert.ToBase64String(System.Text.Encoding.ASCII.GetBytes(credentials.Password)),
@@ -259,11 +298,12 @@ namespace SDSFoundation.Security.OpenIdDict.Flows.Password
                 ["clientIPAddress"] = credentials.IPAddress
             });
 
-
-            var response = await client.SendAsync(request, HttpCompletionOption.ResponseContentRead);
+             var response =  SendHttpRequest(request);
             response.EnsureSuccessStatusCode();
+            var responseText = await response.Content.ReadAsStringAsync();
 
-            var payload = JObject.Parse(await response.Content.ReadAsStringAsync());
+
+            var payload = JObject.Parse(responseText);
             if (payload["error"] != null)
             {
                 throw new InvalidOperationException("An error occurred while retrieving an access token.");
@@ -275,16 +315,17 @@ namespace SDSFoundation.Security.OpenIdDict.Flows.Password
 
         private async Task<string> GetResourceAsync(PasswordFlowCredentials credentials, string token)
         {
-
+          
             var request = new HttpRequestMessage(HttpMethod.Get, openIdConnectPath + "/api/message");
             //var request = new HttpRequestMessage(HttpMethod.Post, openIdConnectPath + "/api/GetMessage");
             request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
             request.Headers.Add("client_id", credentials.ClientId);
+            request.Headers.Add("tenantId", credentials.TenantId);
             request.Headers.Add("siteId", credentials.SiteId);
             request.Headers.Add("deviceId", credentials.DeviceId);
             request.Headers.Add("clientIPAddress", credentials.IPAddress);
 
-            var response = await client.SendAsync(request, HttpCompletionOption.ResponseContentRead);
+            var response = SendHttpRequest(request);
             response.EnsureSuccessStatusCode();
 
             return await response.Content.ReadAsStringAsync();

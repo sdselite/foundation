@@ -14,14 +14,19 @@ namespace SDSFoundation.Model.Security.Configuration.ConfigurationProviders.Wind
     {
         private EncryptionHelper encryptionHelper = new EncryptionHelper();
         private readonly CommandLineOptions commandLineOptions;
-        public SecureConfigurationProvider(CommandLineOptions options) : base()
+        public SecureConfigurationProvider(CommandLineOptions options, int maximumLicenseAge = 7) : base()
         {
             this.commandLineOptions = options;
-            UpdateOptionsWithLicenseFile();
+            UpdateOptionsWithLicenseFile(false, maximumLicenseAge);
             Data = GetSecrets();
         }
 
-        private void UpdateOptionsWithLicenseFile(bool reRun = false)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="reRun"></param>
+        /// <param name="maximumLicenseAge">Days that a license can be processed</param>
+        private void UpdateOptionsWithLicenseFile(bool reRun = false, int maximumLicenseAge = 7)
         {
             //Get key
             var filePath = Directory.GetCurrentDirectory();
@@ -62,26 +67,39 @@ namespace SDSFoundation.Model.Security.Configuration.ConfigurationProviders.Wind
 
                 if (!wasParsed && !reRun)
                 {
-                    //First attempt to get options using original encryption.  If it can be parsed, re-encrypt it so that it can only be used on this device
-                    try
+                    var startDate = DateTime.Now.AddDays(maximumLicenseAge * -1).Date;
+                    var endDate = DateTime.Now.AddDays(1).Date;
+                    var currentProcessDate = startDate;
+
+                    while(currentProcessDate <= endDate)
                     {
-                        var parsedFile = ConfigurationToken.GetCommandLineOptionsFromConfigurationToken(licenseText, DateTime.Now.Date.ToShortDateString() + fileName);
-
-                        var firstNetworkInterface = networkInterfaces?.FirstOrDefault();
-                        if (firstNetworkInterface != null)
+                        //First attempt to get options using original encryption.  If it can be parsed, re-encrypt it so that it can only be used on this device
+                        try
                         {
-                            var newEncryptedText = parsedFile.ToConfigurationToken(fileName + firstNetworkInterface.PhysicalAddress);
-                            File.WriteAllText(licenseFileNameAndPath, newEncryptedText);
 
-                            //Do this again.  Should work the next run
-                            UpdateOptionsWithLicenseFile(true);
+                            var parsedFile = ConfigurationToken.GetCommandLineOptionsFromConfigurationToken(licenseText, currentProcessDate.ToShortDateString() + fileName);
+
+                            var firstNetworkInterface = networkInterfaces?.FirstOrDefault();
+                            if (firstNetworkInterface != null)
+                            {
+                                var newEncryptedText = parsedFile.ToConfigurationToken(fileName + firstNetworkInterface.PhysicalAddress);
+                                File.WriteAllText(licenseFileNameAndPath, newEncryptedText);
+
+                                //Do this again.  Should work the next run
+                                UpdateOptionsWithLicenseFile(true);
+
+                                break;
+                            }
+
+                        }
+                        catch (Exception ex)
+                        {
+                            //Do nothing.  We expect an exception if it has been re-encyrpted
                         }
 
+                        currentProcessDate = currentProcessDate.AddDays(1);
                     }
-                    catch (Exception)
-                    {
-                        //Do nothing.  We expect an exception if it has been re-encyrpted
-                    }
+
 
                 }
 

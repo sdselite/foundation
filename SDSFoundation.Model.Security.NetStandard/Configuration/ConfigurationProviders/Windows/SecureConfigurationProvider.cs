@@ -190,18 +190,20 @@ namespace SDSFoundation.Model.Security.Configuration.ConfigurationProviders.Wind
 
         private IDictionary<string, string> GetSecrets()
         {
-            var secretsDictionary = new Dictionary<string, string>
-           {
-                {"AuthorizationServer", commandLineOptions.AuthorizationServer},
-                {"ClientId", commandLineOptions.ClientId},
-                {"ClientSecret", commandLineOptions.ClientSecret},
-                {"ConfigurationToken", commandLineOptions.ConfigurationToken},
-                {"DeviceId", commandLineOptions.DeviceId},
-                {"Password", commandLineOptions.Password},
-                {"SiteId", commandLineOptions.SiteId},
-                {"UserName", commandLineOptions.UserName},
-                {"TenantId", commandLineOptions.TenantId},
-           };
+            var secretsDictionary = new Dictionary<string, string>();
+
+            if (commandLineOptions != null) {
+                if (!string.IsNullOrWhiteSpace(commandLineOptions.AuthorizationServer)) secretsDictionary.Add("AuthorizationServer", commandLineOptions.AuthorizationServer);
+                if (!string.IsNullOrWhiteSpace(commandLineOptions.ClientId)) secretsDictionary.Add("ClientId", commandLineOptions.ClientId);
+                if (!string.IsNullOrWhiteSpace(commandLineOptions.ClientSecret)) secretsDictionary.Add("ClientSecret", commandLineOptions.ClientSecret);
+                if (!string.IsNullOrWhiteSpace(commandLineOptions.ConfigurationToken)) secretsDictionary.Add("ConfigurationToken", commandLineOptions.ConfigurationToken);
+                if (!string.IsNullOrWhiteSpace(commandLineOptions.DeviceId)) secretsDictionary.Add("DeviceId", commandLineOptions.DeviceId);
+                if (!string.IsNullOrWhiteSpace(commandLineOptions.Password)) secretsDictionary.Add("Password", commandLineOptions.Password);
+                if (!string.IsNullOrWhiteSpace(commandLineOptions.SiteId)) secretsDictionary.Add("SiteId", commandLineOptions.SiteId);
+                if (!string.IsNullOrWhiteSpace(commandLineOptions.UserName)) secretsDictionary.Add("UserName", commandLineOptions.UserName);
+                if (!string.IsNullOrWhiteSpace(commandLineOptions.TenantId)) secretsDictionary.Add("TenantId", commandLineOptions.TenantId);
+            } 
+
             return secretsDictionary;
         }
 

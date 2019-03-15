@@ -6,12 +6,15 @@
     <Description>Security Model using .net standard for support across .net frameworks</Description>
     <PackageId>SDSFoundation.Model.Security.NetStandard</PackageId>
     <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
-    <PackageReleaseNotes>Moved the base class for SecureProgram to SDSFoundation.Security.OpenIdDict because this is a more logical location (fewer dependencies)</PackageReleaseNotes>
-    <Version>1.0.6.3</Version>
+    <PackageReleaseNotes>Moved the base class for SecureProgram to SDSFoundation.Security.OpenIdDict because this is a more logical location (fewer dependencies).
+
+Added "Console" option to configuration options.</PackageReleaseNotes>
+    <Version>1.0.6.7</Version>
     <PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
     <Company>SDSFoundation.Model.Security.NetStandard</Company>
     <Authors>SDSFoundation.Model.Security.NetStandard</Authors>
     <RootNamespace>SDSFoundation.Model.Security</RootNamespace>
+    <AssemblyVersion>1.0.6.7</AssemblyVersion>
   </PropertyGroup>
 
   <ItemGroup>

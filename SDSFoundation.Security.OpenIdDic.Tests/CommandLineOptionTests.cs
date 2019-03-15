@@ -8,7 +8,7 @@ using SDSFoundation.Security.OpenIdDict.Base.Windows;
 namespace SDSFoundation.Security.OpenIdDict.Tests
 {
     [TestClass]
-    public class CommandLineOptionTests : SecureProgram
+    public class CommandLineOptionTests : SecureProgram<CommandLineOptionTests>
     {
 
         [TestMethod]
@@ -41,11 +41,11 @@ namespace SDSFoundation.Security.OpenIdDict.Tests
         [TestMethod]
         public void TestConfigurationFileAndArgs()
         {
-            var args = new List<string>().ToArray();
-            InitializeConfiguration(args: args, appSettingsFileName: "appsettings.json", maximumLicenseAge: 3);
+            //var args = new List<string>().ToArray();
+            var args = new List<string>() { "--t", "123", "--r", "true", "--z", "true", "--x", "true" }.ToArray();
 
+            var commandLineOptions = Initialize(args: args, appSettingsFileName: "appsettings.json", maximumLicenseAge: 3);
             Login(tokenExpirationSeconds: 3600, ignoreInvalidCertificate: true);
-
         }
    
     }

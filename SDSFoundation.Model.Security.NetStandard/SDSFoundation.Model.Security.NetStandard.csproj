@@ -8,13 +8,14 @@
     <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
     <PackageReleaseNotes>Moved the base class for SecureProgram to SDSFoundation.Security.OpenIdDict because this is a more logical location (fewer dependencies).
 
-Added "Console" option to configuration options.</PackageReleaseNotes>
-    <Version>1.0.6.7</Version>
+Added "Console" option to configuration options.
+Removing ServiceBase and switching to TopHost</PackageReleaseNotes>
+    <Version>1.0.6.9</Version>
     <PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
     <Company>SDSFoundation.Model.Security.NetStandard</Company>
     <Authors>SDSFoundation.Model.Security.NetStandard</Authors>
     <RootNamespace>SDSFoundation.Model.Security</RootNamespace>
-    <AssemblyVersion>1.0.6.7</AssemblyVersion>
+    <AssemblyVersion>1.0.6.9</AssemblyVersion>
   </PropertyGroup>
 
   <ItemGroup>

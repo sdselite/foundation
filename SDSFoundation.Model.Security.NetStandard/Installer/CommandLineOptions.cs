@@ -43,10 +43,10 @@ namespace SDSFoundation.Model.Security.Installer
         [Option('r', "RunAsConsole", HelpText = "Run in Console mode.")]
         public bool RunAsConsole { get; set; }
 
-        [Option('z', "Install", HelpText = "Installs as a service using the name provided.  If no service name is provided a default name is used.")]
-        public bool Install { get; set; }
+        //[Option('z', "Install", HelpText = "Installs as a service using the name provided.  If no service name is provided a default name is used.")]
+        //public bool Install { get; set; }
 
-        [Option('x', "Uninstall", HelpText = "Uninstalls the service using the name provided.  If no name is provided it uninstalls the application in the current path.")]
-        public bool Uninstall { get; set; }
+        //[Option('x', "Uninstall", HelpText = "Uninstalls the service using the name provided.  If no name is provided it uninstalls the application in the current path.")]
+        //public bool Uninstall { get; set; }
     }
 }

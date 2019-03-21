@@ -9,8 +9,10 @@
     <PackageReleaseNotes>Added SecureProgram base class.  Moved from another library because this is a more logical location.
 Resolved issues involving integration with Azure - allow ignoring invalid SSL certs
 
-Added support for console mode</PackageReleaseNotes>
-    <Version>1.0.1.7</Version>
+Added support for console mode
+
+Removing ServiceBase and switching to TopHost</PackageReleaseNotes>
+    <Version>1.0.1.11</Version>
     <PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
     <Company>SDSFoundation.Security.OpenIdDict</Company>
     <Authors>SDSFoundation.Security.OpenIdDict</Authors>
@@ -20,10 +22,8 @@ Added support for console mode</PackageReleaseNotes>
   <ItemGroup>
     <PackageReference Include="Core.System.Configuration.Install" Version="1.0.0" />
     <PackageReference Include="log4net" Version="2.0.8" />
-    <PackageReference Include="Microsoft.Extensions.Hosting" Version="2.2.0" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
     <PackageReference Include="System.Net.Security" Version="4.3.2" />
-    <PackageReference Include="System.ServiceProcess.ServiceController" Version="4.5.0" />
   </ItemGroup>
 
   <ItemGroup>

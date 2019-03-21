@@ -186,6 +186,9 @@ namespace SDSFoundation.Model.Security.Configuration.ConfigurationProviders.Wind
                 File.WriteAllText(licenseFileNameAndPath, newEncryptedText);
             }
 
+            //Add properties to the file options that were not serialized to file.
+            fileOptions.RunAsConsole = commandLineOptions.RunAsConsole;
+
         }
 
         private IDictionary<string, string> GetSecrets()

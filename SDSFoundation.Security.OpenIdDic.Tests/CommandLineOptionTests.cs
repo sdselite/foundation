@@ -38,15 +38,22 @@ namespace SDSFoundation.Security.OpenIdDict.Tests
 
         }
 
-        [TestMethod]
-        public void TestConfigurationFileAndArgs()
-        {
-            //var args = new List<string>().ToArray();
-            var args = new List<string>() { "--t", "123", "--r", "true", "--z", "true", "--x", "true" }.ToArray();
+        //[TestMethod]
+        //public void TestConfigurationFileAndArgs()
+        //{
+        //    //var args = new List<string>().ToArray();
+        //    //var args = new List<string>() { "--t", "123", "--r", "true", "--z", "true", "--x", "true" }.ToArray();
 
-            var commandLineOptions = Initialize(args: args, appSettingsFileName: "appsettings.json", maximumLicenseAge: 3);
-            Login(tokenExpirationSeconds: 3600, ignoreInvalidCertificate: true);
-        }
+        //    var args = new List<string>() { "--r", "true" }.ToArray();
+
+        //    var commandLineOptions = Initialize(args: args, appSettingsFileName: "appsettings.json", maximumLicenseAge: 3);
+        //    Login(tokenExpirationSeconds: 3600, ignoreInvalidCertificate: true);
+
+        //    //var runTask = Run<ExampleService>();
+        //    runTask.Wait();
+
+        //    var didRun = runTask.Result;
+        //}
    
     }
 }

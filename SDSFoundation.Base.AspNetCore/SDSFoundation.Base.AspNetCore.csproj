@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Product>SDSFoundation.Base.AspNetCore</Product>
+    <Description>Base class to integrate aspnet core applications with the security services framework</Description>
+    <PackageId>SDSFoundation.Base.AspNetCore</PackageId>
+    <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
+    <PackageReleaseNotes>Base class to integrate aspnet core applications with the security services framework</PackageReleaseNotes>
+    <Version>1.0.0</Version>
+    <PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
+    <Company>SDSFoundation.Base.AspNetCore</Company>
+    <Authors>SDSFoundation.Base.AspNetCore</Authors>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="log4net" Version="2.0.8" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Cookies" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.CookiePolicy" Version="2.2.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.2.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
+    <PackageReference Include="SDSFoundation.ExtensionMethods.NetStandard" Version="1.0.3" />
+    <PackageReference Include="SDSFoundation.Model.Security.NetStandard" Version="1.0.6.9" />
+  </ItemGroup>
+
+</Project>

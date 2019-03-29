@@ -12,5 +12,10 @@ namespace SDSFoundation.Model.Security.Configuration.ConfigurationProviders.Wind
         {
             return builder.Add(new SecureConfigurationSource(options, maximumLicenseAge));
         }
+
+        public static IConfigurationBuilder AddCustomConfiguration(this IConfigurationBuilder builder, int maximumLicenseAge = 7)
+        {
+            return builder.Add(new SecureConfigurationSource(maximumLicenseAge));
+        }
     }
 }

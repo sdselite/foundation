@@ -92,7 +92,11 @@ namespace SDSFoundation.Security.OpenIdDict.Base.Windows
 
             LogInfo("Starting...");
             var commandLineOptionsConfigured = InitializeConfiguration(args, appSettingsFileName, maximumLicenseAge);
-            RunAsConsole = commandLineOptionsConfigured.RunAsConsole;
+            if(commandLineOptionsConfigured != null)
+            {
+                RunAsConsole = commandLineOptionsConfigured.RunAsConsole;
+            }
+            
 
             if (args != null && args.Count() > 0)
             {
@@ -277,27 +281,45 @@ namespace SDSFoundation.Security.OpenIdDict.Base.Windows
         {
 
             CommandLineOptions options = null;
-            var commandLineOptions = Parser.Default.ParseArguments<CommandLineOptions>(args)
+
+
+            if(args != null && args.Count() > 0)
+            {
+                var commandLineOptions = Parser.Default.ParseArguments<CommandLineOptions>(args)
                 .WithParsed(x => {
                     options = x;
                 }).WithNotParsed(errors => {
 
-                    if(errors != null && errors.Count() > 0)
+                    if (errors != null && errors.Count() > 0)
                     {
                         foreach (var ex in errors)
                         {
                             LogWarning("Error Parsing CommandLineOption: " + ex.Tag.ToString());
                         }
                     }
-                    
+
                 });
+            }
 
 
+            IConfigurationBuilder builder = null;
             // Set up configuration sources.
-            var builder = new ConfigurationBuilder()
+
+            if(options != null)
+            {
+                builder = new ConfigurationBuilder()
                 .SetBasePath(Path.Combine(AppContext.BaseDirectory))
                 .AddCustomConfiguration(options, maximumLicenseAge)
                 .AddJsonFile(appSettingsFileName, optional: true);
+            }
+            else
+            {
+                builder = new ConfigurationBuilder()
+               .SetBasePath(Path.Combine(AppContext.BaseDirectory))
+               .AddCustomConfiguration(maximumLicenseAge)
+               .AddJsonFile(appSettingsFileName, optional: true);
+            }
+
 
             Configuration = builder.Build();
 

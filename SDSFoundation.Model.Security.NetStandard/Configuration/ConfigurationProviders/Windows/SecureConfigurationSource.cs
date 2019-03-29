@@ -16,6 +16,11 @@ namespace SDSFoundation.Model.Security.Configuration.ConfigurationProviders.Wind
             this.maximumLicenseAge = maximumLicenseAge;
         }
 
+        public SecureConfigurationSource(int maximumLicenseAge = 7)
+        {
+            this.options = new CommandLineOptions();
+            this.maximumLicenseAge = maximumLicenseAge;
+        }
 
         public IConfigurationProvider Build(IConfigurationBuilder builder)
         {

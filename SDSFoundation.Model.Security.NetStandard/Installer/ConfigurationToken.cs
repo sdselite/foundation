@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Xml.Serialization;
-using SDSFoundation.ExtensionMethods.NetStandard.Serialization;
 
 namespace SDSFoundation.Model.Security.Installer
 {

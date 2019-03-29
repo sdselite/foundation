@@ -1,15 +1,28 @@
-﻿
-using System.Linq;
+﻿using System.Linq;
 using System.Security.Claims;
 
 namespace SDSFoundation.ExtensionMethods.Security.Claims
 {
     public static class ClaimsPrincipalExtensions
     {
- 
+
+
         public static bool HasClaim(this ClaimsPrincipal principal, string name, string value)
         {
             return ValidateClaim(principal, name, value);
+        }
+
+        /// <summary>
+        /// Validate a claim value based on an enum
+        /// </summary>
+        /// <typeparam name="TEnum"></typeparam>
+        /// <param name="principal"></param>
+        /// <param name="enumVal"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static bool HasClaim<TEnum>(this ClaimsPrincipal principal, TEnum enumVal, string value) where TEnum : System.Enum
+        {
+            return ValidateClaim(principal, enumVal.ToString(), value);
         }
 
 

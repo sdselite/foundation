@@ -2,19 +2,25 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Version>1.0.1</Version>
+    <Version>1.0.1.2</Version>
     <Product>SDSFoundation.Model.Schedule.NetStandard</Product>
     <Description>Added helper method for the purpose of chaining jobs</Description>
     <PackageId>SDSFoundation.Model.Schedule.NetStandard</PackageId>
     <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
-    <PackageReleaseNotes>Added helper method for the purpose of chaining jobs</PackageReleaseNotes>
+    <PackageReleaseNotes>Added helper method for the purpose of chaining jobs
+Added job assembly helper to find jobs in a file system
+Added GetJobGroupsDictionary method
+Added helper to add missing jobs and run existing ones</PackageReleaseNotes>
     <PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
     <Company>SDSFoundation.Model.Schedule.NetStandard</Company>
     <Authors>SDSFoundation.Model.Schedule.NetStandard</Authors>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="2.2.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyModel" Version="2.1.0" />
     <PackageReference Include="Quartz" Version="3.0.7" />
+    <PackageReference Include="System.Runtime.Loader" Version="4.3.0" />
   </ItemGroup>
 
 </Project>

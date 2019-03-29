@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.NetworkInformation;
+using System.Reflection;
 using System.Text;
 
 namespace SDSFoundation.Model.Security.Configuration.ConfigurationProviders.Windows
@@ -16,10 +17,19 @@ namespace SDSFoundation.Model.Security.Configuration.ConfigurationProviders.Wind
         private readonly CommandLineOptions commandLineOptions;
         public SecureConfigurationProvider(CommandLineOptions options, int maximumLicenseAge = 7) : base()
         {
-            this.commandLineOptions = options;
+            if(options != null)
+            {
+                this.commandLineOptions = options;
+            }
+            else
+            {
+                this.commandLineOptions = new CommandLineOptions();
+            }
+            
             UpdateOptionsWithLicenseFile(false, maximumLicenseAge);
             Data = GetSecrets();
         }
+
 
         /// <summary>
         /// 
@@ -31,6 +41,12 @@ namespace SDSFoundation.Model.Security.Configuration.ConfigurationProviders.Wind
             //Get key
             var filePath = Directory.GetCurrentDirectory();
             var licenseFileNameAndPath = Directory.GetFiles(filePath)?.ToList().Where(x => x.ToLower().Trim().EndsWith(".license")).FirstOrDefault();
+
+            if (string.IsNullOrWhiteSpace(licenseFileNameAndPath))
+            {
+                filePath = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
+                licenseFileNameAndPath = Directory.GetFiles(filePath)?.ToList().Where(x => x.ToLower().Trim().EndsWith(".license")).FirstOrDefault();
+            }
 
             if (licenseFileNameAndPath != null)
             {
@@ -121,52 +137,56 @@ namespace SDSFoundation.Model.Security.Configuration.ConfigurationProviders.Wind
         {
             //the options passed through the command line override the file
             bool hasChanges = false;
-            if (string.IsNullOrWhiteSpace(commandLineOptions.AuthorizationServer) == false)
-            {
-                fileOptions.AuthorizationServer = commandLineOptions.AuthorizationServer;
-                hasChanges = true;
-            }
 
-            if (string.IsNullOrWhiteSpace(commandLineOptions.TenantId) == false)
+            if(commandLineOptions != null)
             {
-                fileOptions.TenantId = commandLineOptions.TenantId;
-                hasChanges = true;
-            }
+                if (string.IsNullOrWhiteSpace(commandLineOptions.AuthorizationServer) == false)
+                {
+                    fileOptions.AuthorizationServer = commandLineOptions.AuthorizationServer;
+                    hasChanges = true;
+                }
 
-            if (string.IsNullOrWhiteSpace(commandLineOptions.ClientId) == false && commandLineOptions.ClientId != fileOptions.ClientId)
-            {
-                fileOptions.ClientId = commandLineOptions.ClientId;
-                hasChanges = true;
-            }
+                if (string.IsNullOrWhiteSpace(commandLineOptions.TenantId) == false)
+                {
+                    fileOptions.TenantId = commandLineOptions.TenantId;
+                    hasChanges = true;
+                }
 
-            if (string.IsNullOrWhiteSpace(commandLineOptions.ClientSecret) == false && commandLineOptions.ClientSecret != fileOptions.ClientSecret)
-            {
-                fileOptions.ClientSecret = commandLineOptions.ClientSecret;
-                hasChanges = true;
-            }
+                if (string.IsNullOrWhiteSpace(commandLineOptions.ClientId) == false && commandLineOptions.ClientId != fileOptions.ClientId)
+                {
+                    fileOptions.ClientId = commandLineOptions.ClientId;
+                    hasChanges = true;
+                }
 
-            if (string.IsNullOrWhiteSpace(commandLineOptions.DeviceId) == false && commandLineOptions.DeviceId != fileOptions.DeviceId)
-            {
-                fileOptions.DeviceId = commandLineOptions.DeviceId;
-                hasChanges = true;
-            }
+                if (string.IsNullOrWhiteSpace(commandLineOptions.ClientSecret) == false && commandLineOptions.ClientSecret != fileOptions.ClientSecret)
+                {
+                    fileOptions.ClientSecret = commandLineOptions.ClientSecret;
+                    hasChanges = true;
+                }
 
-            if (string.IsNullOrWhiteSpace(commandLineOptions.Password) == false && commandLineOptions.Password != fileOptions.Password)
-            {
-                fileOptions.Password = commandLineOptions.Password;
-                hasChanges = true;
-            }
+                if (string.IsNullOrWhiteSpace(commandLineOptions.DeviceId) == false && commandLineOptions.DeviceId != fileOptions.DeviceId)
+                {
+                    fileOptions.DeviceId = commandLineOptions.DeviceId;
+                    hasChanges = true;
+                }
 
-            if (string.IsNullOrWhiteSpace(commandLineOptions.SiteId) == false && commandLineOptions.SiteId != fileOptions.SiteId)
-            {
-                fileOptions.SiteId = commandLineOptions.SiteId;
-                hasChanges = true;
-            }
+                if (string.IsNullOrWhiteSpace(commandLineOptions.Password) == false && commandLineOptions.Password != fileOptions.Password)
+                {
+                    fileOptions.Password = commandLineOptions.Password;
+                    hasChanges = true;
+                }
 
-            if (string.IsNullOrWhiteSpace(commandLineOptions.UserName) == false && commandLineOptions.UserName != fileOptions.UserName)
-            {
-                fileOptions.UserName = commandLineOptions.UserName;
-                hasChanges = true;
+                if (string.IsNullOrWhiteSpace(commandLineOptions.SiteId) == false && commandLineOptions.SiteId != fileOptions.SiteId)
+                {
+                    fileOptions.SiteId = commandLineOptions.SiteId;
+                    hasChanges = true;
+                }
+
+                if (string.IsNullOrWhiteSpace(commandLineOptions.UserName) == false && commandLineOptions.UserName != fileOptions.UserName)
+                {
+                    fileOptions.UserName = commandLineOptions.UserName;
+                    hasChanges = true;
+                }
             }
 
             //Set the commandLineOptions to equal the fileOptions settings - this merges the two

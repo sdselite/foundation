@@ -1,5 +1,4 @@
-﻿using log4net;
-using Microsoft.AspNetCore.Authentication;
+﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Builder;
@@ -9,19 +8,26 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Newtonsoft.Json.Linq;
 using SDSFoundation.Model.Security.Enumerations;
+using SDSFoundation.Security.OpenIdDict.Base.Windows;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace SDSFoundation.Base.AspNetCore
 {
-    public abstract class AspNetCoreStartupBase<TProgram> where TProgram : class
+
+    public class SecureStartup<TProgram> : SecureProgram<TProgram> where TProgram : class
     {
-        public static readonly ILog Log = log4net.LogManager.GetLogger(typeof(TProgram));
-        public AspNetCoreStartupBase(IConfiguration configuration)
+
+        public SecureStartup(IConfiguration configuration)
         {
+            var args = new List<string>().ToArray();
+            //Initialize Application to guarantee secure connection
+            var commandLineOptions = Initialize(args: args, appSettingsFileName: "appsettings.json", maximumLicenseAge: 12);
+
             Configuration = configuration;
         }
 
@@ -29,6 +35,7 @@ namespace SDSFoundation.Base.AspNetCore
 
         public AuthenticationBuilder ConfigureAuthenticationServices(IServiceCollection services, string loginPath = "/signin")
         {
+
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
@@ -45,8 +52,8 @@ namespace SDSFoundation.Base.AspNetCore
             })
             .AddOpenIdConnect(options =>
             {
-                options.ClientId = "Global";
-                options.ClientSecret = "f066481c-2cea-47c7-a049-e7ab14ac2038";
+                options.ClientId = ClientId;
+                options.ClientSecret = ClientSecret;
 
                 options.RequireHttpsMetadata = false;
                 options.GetClaimsFromUserInfoEndpoint = true;
@@ -59,10 +66,7 @@ namespace SDSFoundation.Base.AspNetCore
                 // Note: setting the Authority allows the OIDC client middleware to automatically
                 // retrieve the identity provider's configuration and spare you from setting
                 // the different endpoints URIs or the token validation parameters explicitly.
-                options.Authority = "https://globalservicessecuritydemo.azurewebsites.net/";
-
-                //options.Authority = "http://localhost:54540/";
-
+                options.Authority = AuthorizationServer;
 
                 var authorizedScopes = Enum.GetNames(typeof(ClaimType)).ToList();
 

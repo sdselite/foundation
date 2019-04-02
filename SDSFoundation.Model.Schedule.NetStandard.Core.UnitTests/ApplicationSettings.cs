@@ -106,22 +106,7 @@ namespace SDSFoundation.Model.Schedule.NetStandard.Core.UnitTests
             }
         }
 
-        public static string InstanceName
-        {
-            get
-            {
-                //InstanceName
-                var result = configuration["ApplicationSettings:InstanceName"];
 
-                //If the instance name is set to empty string, use the instance id as the name
-                if (string.IsNullOrWhiteSpace(result))
-                {
-                    result = InstanceId;
-                }
-
-                return result;
-            }
-        }
 
         public static string InstanceId
         {

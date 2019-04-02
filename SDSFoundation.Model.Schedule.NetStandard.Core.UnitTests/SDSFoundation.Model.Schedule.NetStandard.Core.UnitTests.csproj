@@ -4,6 +4,24 @@
     <TargetFramework>netcoreapp2.2</TargetFramework>
 
     <IsPackable>false</IsPackable>
+
+    <Version>1.0.1</Version>
+
+    <PackageReleaseNotes>Added assembly resolver</PackageReleaseNotes>
+
+    <Product>SDSFoundation.Model.Schedule.NetStandard.Core.UnitTests</Product>
+
+    <Description>Added assembly resolver</Description>
+
+    <PackageId>SDSFoundation.Model.Schedule.NetStandard.Core.UnitTests</PackageId>
+
+    <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
+
+    <PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
+
+    <Company>SDSFoundation.Model.Schedule.NetStandard.Core.UnitTests</Company>
+
+    <Authors>SDSFoundation.Model.Schedule.NetStandard.Core.UnitTests</Authors>
   </PropertyGroup>
 
   <ItemGroup>

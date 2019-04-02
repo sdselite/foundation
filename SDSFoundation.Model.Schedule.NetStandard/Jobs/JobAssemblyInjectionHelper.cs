@@ -1,13 +1,17 @@
 ﻿using Microsoft.Extensions.DependencyModel;
 using Quartz;
 using Quartz.Impl.Matchers;
+using Quartz.Spi;
+using Quartz.Util;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.Loader;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace SDSFoundation.Model.Schedule.NetStandard.Jobs
 {
@@ -15,43 +19,28 @@ namespace SDSFoundation.Model.Schedule.NetStandard.Jobs
 
     public static class JobAssemblyInjectionHelper
     {
+        private static List<LocalJob> allLocalJobs = new List<LocalJob>();
+
         public static void RunJobs(IScheduler scheduler, List<LocalJob> localJobsList)
         {
 
 
             if (localJobsList != null && localJobsList.Count > 0)
             {
-                var keysTask = scheduler.GetJobKeys(GroupMatcher<JobKey>.AnyGroup());
-                keysTask.Wait();
-
-                var keys = keysTask.Result;
-
                 foreach (var localJob in localJobsList)
                 {
-                    var jobKey = keys.Where(x => x.Group == localJob.JobGroup && x.Name == localJob.JobName).FirstOrDefault();
-                    var jobTriggersTask = scheduler.GetTriggersOfJob(jobKey);
-                    jobTriggersTask.Wait();
-                    var jobTriggers = jobTriggersTask.Result;
-
                     //Load the job from the file system
                     var currentAssembly = JobAssemblyInjectionHelper.LoadFile(localJob.FileName);
-                    var currentType = currentAssembly.GetType(localJob.JobName);
+                    var currentType = currentAssembly.GetType(localJob.JobClassName);
+ 
+                    //var currentJob = ObjectUtils.InstantiateType<IJob>(currentType);
+
 
                     var injectedJob = JobBuilder.Create(currentType)
                       .WithIdentity(localJob.JobName, localJob.JobGroup)
+                      .OfType(currentType)
                       .Build();
 
-                    if (jobTriggers != null && jobTriggers.Count > 0)
-                    {
-                        foreach (var jobTrigger in jobTriggers)
-                        {
-                            var scheduleTimeTask = scheduler.ScheduleJob(injectedJob, jobTrigger);
-                            scheduleTimeTask.Wait();
-
-                            var taskScheduledAt = scheduleTimeTask.Result;
-                        }
-
-                    }
 
                 }
             }
@@ -94,7 +83,7 @@ namespace SDSFoundation.Model.Schedule.NetStandard.Jobs
                         var isClusteredJob = localJob.FileName.ToLower().Contains("clusteredjobs");
 
                         var jobAssembly = JobAssemblyInjectionHelper.LoadFile(localJob.FileName);
-                        var jobAssemblyType = jobAssembly.GetType(localJob.JobName);
+                        var jobAssemblyType = jobAssembly.GetType(localJob.JobClassName);
 
                         if (isClusteredJob) //All clustered jobs should store state durably by default
                         {
@@ -106,7 +95,17 @@ namespace SDSFoundation.Model.Schedule.NetStandard.Jobs
                             jobDetail = JobBuilder.Create().WithIdentity(localJob.JobName, localJob.JobGroup).OfType(jobAssemblyType).StoreDurably().Build();
                         }
 
-                        ////Add the job to the scheduler
+
+                        //var trigger =  TriggerBuilder.Create()
+                        // .WithIdentity(localJob.JobName + " Default Trigger", localJob.JobGroup)
+                        // .WithSimpleSchedule()
+                        // .Build();
+
+                        //var scheduleJobTask = scheduler.ScheduleJob(jobDetail, trigger);
+                        //scheduleJobTask.Wait();
+
+                        //var jobStatus = scheduleJobTask.Status;
+
                         var addJobTask = scheduler.AddJob(jobDetail, false);
                         addJobTask.Wait();
                     }
@@ -119,7 +118,7 @@ namespace SDSFoundation.Model.Schedule.NetStandard.Jobs
         /// </summary>
         /// <param name="directoryPath">Optional.  Used to traverse paths</param>
         /// <returns>Dictionary<JobName, JobGroup> of jobs that are configured for execution on the current machine</returns>
-        public static List<LocalJob> GetLocalJobs(string rootJobsFolder, string instanceName, string instanceId, string directoryPath = "")
+        public static List<LocalJob> GetLocalJobs(string rootJobsFolder, string directoryPath = "")
         {
             var result = new List<LocalJob>();
             if ((!string.IsNullOrWhiteSpace(directoryPath) && Directory.Exists(directoryPath)) || (!string.IsNullOrWhiteSpace(rootJobsFolder) && Directory.Exists(rootJobsFolder)))
@@ -152,6 +151,7 @@ namespace SDSFoundation.Model.Schedule.NetStandard.Jobs
                                 try
                                 {
                                     var currentAssembly = LoadFile(currentAssemblyPathAndFileName);
+                                 
                                     var assemblyTypes = currentAssembly.GetTypes();
 
                                     if (assemblyTypes != null && assemblyTypes.Count() > 0)
@@ -160,28 +160,19 @@ namespace SDSFoundation.Model.Schedule.NetStandard.Jobs
                                         {
                                             if (assemblyType.GetInterface(typeof(Quartz.IJob).Name) != null)
                                             {
-                                                var localJob = new LocalJob() { FileName = currentAssemblyPathAndFileName, JobName = assemblyType.FullName };
-
-                                                var currentJobGroupName = string.Empty;
-
-                                                if (!string.IsNullOrWhiteSpace(rootJobsFolder) && !string.IsNullOrWhiteSpace(assemblyType.FullName))
-                                                {
-                                                    currentJobGroupName = currentAssemblyPathAndFileName.Replace(rootJobsFolder, "").Replace(currentAssemblyFileName, "").TrimStart('\\').Replace('\\', '_');
-                                                }
-
-                                                if (!currentJobGroupName.ToLower().StartsWith("clusteredjobs"))
-                                                {
-                                                    currentJobGroupName = string.Format("{0}_{1}", instanceName, instanceId);
-                                                }
-                                                else
+                                                var jobName = assemblyType.FullName.Split('.').Last();
+                                                var localJob = new LocalJob() { FileName = currentAssemblyPathAndFileName, JobName = jobName, JobClassName = assemblyType.FullName };
+                                                var currentJobGroupName = string.Format("{0}", currentAssembly.GetName().Name).Replace('\\', '_');
+                                     
+                                                if (currentAssemblyPathAndFileName.ToLower().Contains("clusteredjobs"))
                                                 {
                                                     //Replace the "clusteredjobs" start with empty string
-                                                    var clusteredJobsText = currentJobGroupName.Split('_').First();
-
-                                                    currentJobGroupName = currentJobGroupName.Replace(clusteredJobsText, "").TrimStart('_').TrimEnd('_');
+  
+                                                    var groupNameExtension = currentDirectory.Replace(rootJobsFolder, "").Replace('\\', '_').TrimStart('.').Trim();
+                                                    currentJobGroupName = string.Format("{0}_{1}", currentJobGroupName, groupNameExtension);
                                                 }
-
-                                                localJob.JobGroup = currentJobGroupName;
+                                              
+                                                localJob.JobGroup = currentJobGroupName.Replace('.', '_');
 
                                                 result.Add(localJob);
                                             }
@@ -198,7 +189,7 @@ namespace SDSFoundation.Model.Schedule.NetStandard.Jobs
                         }
 
                         //Get all child jobs
-                        var childJobs = GetLocalJobs(rootJobsFolder, instanceName, instanceId, currentDirectory);
+                        var childJobs = GetLocalJobs(rootJobsFolder, currentDirectory);
                         if (childJobs != null && childJobs.Count > 0)
                         {
                             foreach (var childJob in childJobs)
@@ -207,68 +198,19 @@ namespace SDSFoundation.Model.Schedule.NetStandard.Jobs
                             }
 
                         }
-
-                        ////Get sub directories and parse for jobs
-                        //var subDirectories = Directory.GetDirectories(currentDirectory);
-                        //if(subDirectories != null && subDirectories.Count() > 0)
-                        //{
-                        //    foreach (var subdirectory in subDirectories)
-                        //    {
-                        //        var subDirectoryJobs = GetLocalJobs(rootJobsFolder, subdirectory);
-                        //        if(subDirectoryJobs != null && subDirectoryJobs.Count > 0)
-                        //        {
-                        //            foreach (var subDirectoryJob in subDirectoryJobs)
-                        //            {
-                        //                result.Add(subDirectoryJob.Key, subDirectoryJob.Value);
-                        //            }
-                        //        }
-                        //    }
-                        //}
+ 
                     }
                 }
             }
 
+            allLocalJobs = result;
 
+            //Wire up assembly resolver so that the application can locate injected assembly types
+            AppDomain.CurrentDomain.AssemblyResolve -= CurrentDomain_AssemblyResolve;
+            AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
             return result;
         }
-
-
-        //public static Dictionary<string, string> GetJobGroupsDictionary(string rootJobsFolder, string instanceName, string instanceId, Dictionary<string, string> localJobsDictionary)
-        //{
-        //    Dictionary<string, string> result = new Dictionary<string, string>();
-
-        //    if(localJobsDictionary != null && localJobsDictionary.Count > 0)
-        //    {
-        //        foreach (var localJobEntry in localJobsDictionary)
-        //        {
-        //            var currentJobGroupName = string.Empty;
-
-        //            if (!string.IsNullOrWhiteSpace(rootJobsFolder) && !string.IsNullOrWhiteSpace(localJobEntry.Key))
-        //            {
-        //                currentJobGroupName = localJobEntry.Key.Replace(rootJobsFolder, "").Split(',').First().TrimStart('\\').Replace('\\', '_');
-        //            }
-
-        //            if (!currentJobGroupName.ToLower().StartsWith("clusteredjobs"))
-        //            {
-        //                currentJobGroupName = string.Format("{0}_{1}", instanceName, instanceId);
-        //            }
-        //            else
-        //            {
-        //                //Replace the "clusteredjobs" start with empty string
-        //                var clusteredJobsText = currentJobGroupName.Split('_').First();
-
-        //                currentJobGroupName = currentJobGroupName.Replace(clusteredJobsText, "").TrimStart('_');
-        //            }
-
-        //            result.Add(localJobEntry.Key, currentJobGroupName);
-        //        }
-        //    }
-
-
-
-            
-        //    return result;
-        //}
+ 
 
         public static System.Reflection.Assembly LoadFile(string path)
         {
@@ -282,12 +224,47 @@ namespace SDSFoundation.Model.Schedule.NetStandard.Jobs
             assembly = System.Reflection.Assembly.LoadFile(path);
 #endif
 
-
             // System.Type myType = ass.GetType("Custom.Thing.SampleClass");
             // object myInstance = Activator.CreateInstance(myType);
             return assembly;
         }
 
- 
+
+        private static Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
+        {
+            // Ignore missing resources
+            if (args.Name.Contains(".resources"))
+                return null;
+
+            // check for assemblies already loaded
+            Assembly assembly = AppDomain.CurrentDomain.GetAssemblies().FirstOrDefault(a => a.FullName == args.Name);
+            if (assembly != null)
+                return assembly;
+
+
+            string filename = args.Name.Split(',')[0] + ".dll".ToLower();
+
+
+
+            foreach (var localJob in allLocalJobs)
+            {
+                if (localJob.FileName.EndsWith(filename))
+                {
+                    try
+                    {
+                        return System.Reflection.Assembly.LoadFrom(localJob.FileName);
+                    }
+                    catch (Exception ex)
+                    {
+                        //Do nothing.  Try the next type if one exists
+                    }
+                }
+
+            }
+
+            return null;
+        }
+
+
     }
 }

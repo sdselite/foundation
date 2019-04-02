@@ -2,14 +2,13 @@
   "Data": {
     "DefaultConnection": {
       //TODO - If the connection string is empty, the application will run in memory
-      "ConnectionString": "Server=p4v5kcwul4.database.windows.net;Database=QuartzNet;User Id=relawson@p4v5kcwul4;Password=2s0WF9ylih;"
+      "ConnectionString": ""
     }
   },
   "ApplicationSettings": {
     "AuthorizedTenants": "Global", //Only tenants specified will be able to use this application.  Multiple tenants can be specified, separated by a comma.
     "RootJobsFolder": "C:\\Temp\\Jobs", //Root folder for jobs.  Organized by clustered [ClusteredJobs] and non clustered jobs [Default] using a naming convention in the folder.  Group names are formed by folder name.  Instance jobs use the instance id for the group name.  Default jobs run non-clustered under the default group
-    "InstanceName": "GetLocalJobsTest1", //If empty string, the InstanceId will be used.  Set to Auto for clustering or be certain that there is a unique instance Id
-    "InstanceId": "00000000-0000-0000-0000-000000000123", //If an empty Guid then the value will be randomized
+    "InstanceId": "00000000-0000-0000-0000-000000000000", //If an empty Guid then the value will be randomized
     "ThreadCount": "10",
     "MisfireThreshold": "60000",
     "ProxyAddress": "tcp://127.0.0.1:555/QuartzScheduler", //If running as a client this setting is required.

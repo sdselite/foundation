@@ -8,6 +8,7 @@ namespace SDSFoundation.Model.Schedule.NetStandard.Jobs
     {
         public string FileName { get; set; } 
         public string JobName { get; set; }
+        public string JobClassName { get; set; }
         public string JobGroup { get; set; }
     }
 }

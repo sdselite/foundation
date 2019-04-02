@@ -47,10 +47,11 @@ namespace SDSFoundation.Model.Schedule.NetStandard.Jobs
             return newJob;
         }
 
-
+        private readonly string tenantName;
             public QuartzHelper(string tenantName)
             {
                 tablePrefix = string.Format("{0}_", tenantName);
+                this.tenantName = tenantName;
             }
 
             public QuartzHelper()
@@ -71,11 +72,11 @@ namespace SDSFoundation.Model.Schedule.NetStandard.Jobs
             private readonly string serializerType = "json";
 
 
-            public NameValueCollection GetCommonSettings(string instanceName, string instanceId, string connectionString, bool runAsCluster, int threadCount = 1, int misfireThreshold = 60000)
+            public NameValueCollection GetCommonSettings(string instanceId, string connectionString, bool runAsCluster, int threadCount = 1, int misfireThreshold = 60000)
             {
                 var clientOrServerProperties = new NameValueCollection
                 {
-                    ["quartz.scheduler.instanceName"] = instanceName,
+                    ["quartz.scheduler.instanceName"] = tenantName,
                     ["quartz.scheduler.instanceId"] = instanceId,
                     ["quartz.threadPool.type"] = threadPooltype,
                     ["quartz.threadPool.threadCount"] = threadCount.ToString(),

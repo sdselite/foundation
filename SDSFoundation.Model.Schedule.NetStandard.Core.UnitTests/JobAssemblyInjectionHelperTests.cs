@@ -8,7 +8,9 @@ using SDSFoundation.Model.Schedule.NetStandard.Jobs;
 using SDSFoundation.Security.OpenIdDict.Base.Windows;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 
 namespace SDSFoundation.Model.Schedule.NetStandard.Core.UnitTests
 {
@@ -26,9 +28,7 @@ namespace SDSFoundation.Model.Schedule.NetStandard.Core.UnitTests
             //Login(tokenExpirationSeconds: 3600, ignoreInvalidCertificate: IgnoreInvalidSSLCert);
             //LogInfo("Log In Successful.");
 
-
-
-            var allLocalJobs = JobAssemblyInjectionHelper.GetLocalJobs(ApplicationSettings.RootJobsFolder, ApplicationSettings.InstanceName, ApplicationSettings.InstanceId);
+            var allLocalJobs = JobAssemblyInjectionHelper.GetLocalJobs(ApplicationSettings.RootJobsFolder);
 
             UpdateAndRunAllJobs(allLocalJobs);
 
@@ -39,28 +39,33 @@ namespace SDSFoundation.Model.Schedule.NetStandard.Core.UnitTests
         {
             var quartzHelper = new QuartzHelper(ClientId);
 
-            var clusteredCommonSettings = quartzHelper.GetCommonSettings(ApplicationSettings.InstanceName, "AUTO", ApplicationSettings.ConnectionString, true, int.Parse(ApplicationSettings.ThreadCount), int.Parse(ApplicationSettings.MisfireThreshold));
-            ISchedulerFactory clusteredScheduleFactory = new StdSchedulerFactory(clusteredCommonSettings);
-            var clusteredScheduleFactoryTask = clusteredScheduleFactory.GetScheduler();
-            clusteredScheduleFactoryTask.Wait();
-            var clusteredScheduler = clusteredScheduleFactoryTask.Result;
-            clusteredScheduler.Start();
+            //var clusteredCommonSettings = quartzHelper.GetCommonSettings(ApplicationSettings.InstanceName, "AUTO", ApplicationSettings.ConnectionString, true, int.Parse(ApplicationSettings.ThreadCount), int.Parse(ApplicationSettings.MisfireThreshold));
+            //ISchedulerFactory clusteredScheduleFactory = new StdSchedulerFactory(clusteredCommonSettings);
+            //var clusteredScheduleFactoryTask = clusteredScheduleFactory.GetScheduler();
+            //clusteredScheduleFactoryTask.Wait();
+            //var clusteredScheduler = clusteredScheduleFactoryTask.Result;
+         
 
-            var allClusteredJobs = allLocalJobs.Where(x => x.FileName.ToLower().Contains("clusteredjobs")).ToList();
-            JobAssemblyInjectionHelper.AddMissingJobsToScheduler(clusteredScheduler, allClusteredJobs);
-            JobAssemblyInjectionHelper.RunJobs(clusteredScheduler, allClusteredJobs);
+            //var allClusteredJobs = allLocalJobs.Where(x => x.FileName.ToLower().Contains("clusteredjobs")).ToList();
+            //JobAssemblyInjectionHelper.AddMissingJobsToScheduler(clusteredScheduler, allClusteredJobs);
+            //JobAssemblyInjectionHelper.RunJobs(clusteredScheduler, allClusteredJobs);
 
-            var nonClusteredCommonSettings = quartzHelper.GetCommonSettings(ApplicationSettings.InstanceName, ApplicationSettings.InstanceId, ApplicationSettings.ConnectionString, false, int.Parse(ApplicationSettings.ThreadCount), int.Parse(ApplicationSettings.MisfireThreshold));
+            var nonClusteredCommonSettings = quartzHelper.GetCommonSettings(ApplicationSettings.InstanceId, ApplicationSettings.ConnectionString, false, int.Parse(ApplicationSettings.ThreadCount), int.Parse(ApplicationSettings.MisfireThreshold));
             ISchedulerFactory nonClusteredScheduleFactory = new StdSchedulerFactory(nonClusteredCommonSettings);
             var nonClusteredScheduleFactoryTask = nonClusteredScheduleFactory.GetScheduler();
             nonClusteredScheduleFactoryTask.Wait();
             var nonClusteredScheduler = nonClusteredScheduleFactoryTask.Result;
-            nonClusteredScheduler.Start();
+            
 
             var allNonClusteredJobs = allLocalJobs.Where(x => !x.FileName.ToLower().Contains("clusteredjobs")).ToList();
             JobAssemblyInjectionHelper.AddMissingJobsToScheduler(nonClusteredScheduler, allNonClusteredJobs);
             JobAssemblyInjectionHelper.RunJobs(nonClusteredScheduler, allNonClusteredJobs);
+
+
+            nonClusteredScheduler.Start();
+            //clusteredScheduler.Start();
         }
+
 
 
 

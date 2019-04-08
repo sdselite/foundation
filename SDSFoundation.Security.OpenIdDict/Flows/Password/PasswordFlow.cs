@@ -330,5 +330,36 @@ namespace SDSFoundation.Security.OpenIdDict.Flows.Password
 
             return await response.Content.ReadAsStringAsync();
         }
+
+        public async Task<string> ExecuteSecureAction(PasswordFlowCredentials credentials, string actionName, Dictionary<string, string> actionParameters = null)
+        {
+
+            //Convert the dictionary into delimited parameters
+            var delimitedParameters = string.Empty;
+
+            if(actionParameters != null && actionParameters.Count > 0)
+            {
+                foreach (var actionParameter in actionParameters)
+                {
+                    delimitedParameters = string.Format("{0}{1}:{2},", delimitedParameters, actionParameter.Key, actionParameter.Value);
+                }
+            }
+
+            var token = await ValidateCredentials();
+            var request = new HttpRequestMessage(HttpMethod.Get, openIdConnectPath + $"/api/action?actionName={actionName}&delimitedParameters={delimitedParameters}");
+            //var request = new HttpRequestMessage(HttpMethod.Post, openIdConnectPath + "/api/GetMessage");
+            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            request.Headers.Add("client_id", credentials.ClientId);
+            request.Headers.Add("tenantId", credentials.TenantId);
+            request.Headers.Add("siteId", credentials.SiteId);
+            request.Headers.Add("deviceId", credentials.DeviceId);
+            request.Headers.Add("clientIPAddress", credentials.IPAddress);
+
+
+            var response = SendHttpRequest(request);
+            response.EnsureSuccessStatusCode();
+
+            return await response.Content.ReadAsStringAsync();
+        }
     }
 }

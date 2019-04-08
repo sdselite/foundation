@@ -1,5 +1,8 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SDSFoundation.Security.OpenIdDict.Flows.Password;
+using SDSFoundation.ExtensionMethods.Network;
+using System;
+using Newtonsoft.Json.Linq;
 
 namespace SDSFoundation.Security.OpenIdDic.Tests
 {
@@ -40,6 +43,30 @@ namespace SDSFoundation.Security.OpenIdDic.Tests
             var tokenClaims = PasswordFlowTokenCache.Instance.GetTokenClaims(ClientId, accessToken1);
 
             Assert.IsTrue(tokenClaims?.Count > 0, "No Claims Found");
+
+
+        }
+
+        [TestMethod]
+        public void IpAddressToGPSCoordinates()
+        {
+
+
+            UriBuilder uriBuilder = new UriBuilder();
+            var ipAddress = UriExtensions.GetIPFromString("35.137.210.156");
+
+            uriBuilder.Host = ipAddress;
+            uriBuilder.Scheme = "http";
+
+            var uri = uriBuilder.Uri;
+
+            var apiAddress = "http://api.ipstack.com/[URL]?access_key=fbe51630a05b6d0a5c8a4dccc0955aea";
+            var geoData = uri.GetGeolocationData(apiAddress);
+
+            dynamic result = JObject.Parse(geoData);
+
+            var lat = result.latitude.Value;
+            var lng = result.longitude.Value;
 
 
         }

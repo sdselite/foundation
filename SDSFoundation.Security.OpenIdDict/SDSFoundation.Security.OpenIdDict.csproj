@@ -14,7 +14,7 @@ Added support for console mode
 Removing ServiceBase and switching to TopHost
 
 Added support for ASP.Net Core</PackageReleaseNotes>
-    <Version>1.0.1.16</Version>
+    <Version>1.0.1.18</Version>
     <PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
     <Company>SDSFoundation.Security.OpenIdDict</Company>
     <Authors>SDSFoundation.Security.OpenIdDict</Authors>

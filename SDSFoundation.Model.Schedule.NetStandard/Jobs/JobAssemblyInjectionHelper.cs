@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyModel;
 using Quartz;
+using Quartz.Impl;
 using Quartz.Impl.Matchers;
 using Quartz.Spi;
 using Quartz.Util;
@@ -20,6 +21,35 @@ namespace SDSFoundation.Model.Schedule.NetStandard.Jobs
     public static class JobAssemblyInjectionHelper
     {
         private static List<LocalJob> allLocalJobs = new List<LocalJob>();
+
+        public static IScheduler CreateAndInitializeSchedulerWithCommonSettings(string clientId, string instanceId, string connectionString, bool runAsCluster, string rootJobsFolder, string excludedJobFilterExpression = "", string includedJobFilterExpression = "", int threadCount = 1, int misfireThreshold = 60000)
+        {
+            if (!string.IsNullOrWhiteSpace(rootJobsFolder) && (allLocalJobs == null || allLocalJobs.Count == 0))
+            {
+                allLocalJobs = JobAssemblyInjectionHelper.GetLocalJobs(rootJobsFolder);
+            }
+
+
+            var quartzHelper = new QuartzHelper(clientId);
+            var commonSettings = quartzHelper.GetCommonSettings(instanceId, connectionString, runAsCluster, threadCount, misfireThreshold);
+
+            ISchedulerFactory schedulerFactory = new StdSchedulerFactory(commonSettings);
+            var clusteredScheduleFactoryTask = schedulerFactory.GetScheduler();
+            clusteredScheduleFactoryTask.Wait();
+            var scheduler = clusteredScheduleFactoryTask.Result;
+
+            if (!string.IsNullOrWhiteSpace(rootJobsFolder))
+            {
+                var filteredJobs = allLocalJobs.Where(x => 
+                            (!string.IsNullOrWhiteSpace(includedJobFilterExpression) && x.FileName.ToLower().Contains(includedJobFilterExpression))
+                            ||
+                            (!string.IsNullOrWhiteSpace(excludedJobFilterExpression) && !x.FileName.ToLower().Contains(excludedJobFilterExpression))
+                            ).ToList();
+                JobAssemblyInjectionHelper.AddMissingJobsToScheduler(scheduler, filteredJobs);
+            }
+
+            return scheduler;
+        }
 
         public static void RunJobs(IScheduler scheduler, List<LocalJob> localJobsList)
         {

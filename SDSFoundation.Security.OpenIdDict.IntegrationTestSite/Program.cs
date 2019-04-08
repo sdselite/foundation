@@ -13,6 +13,7 @@ namespace SDSFoundation.Security.OpenIdDict.IntegrationTestSite
 {
     public class Program : SecureProgram<Program>
     {
+
         public static void Main(string[] args)
         {
             Initialize(args);

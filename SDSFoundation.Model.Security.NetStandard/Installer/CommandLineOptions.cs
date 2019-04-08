@@ -10,8 +10,6 @@ namespace SDSFoundation.Model.Security.Installer
     /// </summary>
     public class CommandLineOptions
     {
-
-
         //[Option(HelpText = "Set the tenant token.", Required = false)]
         [Option('t', "TenantId", HelpText = "Set the tenant token.")]
         public string TenantId { get; set; }
@@ -42,6 +40,9 @@ namespace SDSFoundation.Model.Security.Installer
 
         [Option('r', "RunAsConsole", HelpText = "Run in Console mode.")]
         public bool RunAsConsole { get; set; }
+
+        [Option('x', "Configuration", HelpText = "Application Specific Configuration.  Convention: SettingName1:SettingValue1,SettingName2:SettingValue2...")]
+        public string Configuration { get; set; }
 
         //[Option('z', "Install", HelpText = "Installs as a service using the name provided.  If no service name is provided a default name is used.")]
         //public bool Install { get; set; }

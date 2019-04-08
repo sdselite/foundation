@@ -152,6 +152,12 @@ namespace SDSFoundation.Model.Security.Configuration.ConfigurationProviders.Wind
                     hasChanges = true;
                 }
 
+                if (string.IsNullOrWhiteSpace(commandLineOptions.Configuration) == false)
+                {
+                    fileOptions.Configuration = commandLineOptions.Configuration;
+                    hasChanges = true;
+                }
+
                 if (string.IsNullOrWhiteSpace(commandLineOptions.ClientId) == false && commandLineOptions.ClientId != fileOptions.ClientId)
                 {
                     fileOptions.ClientId = commandLineOptions.ClientId;
@@ -192,6 +198,7 @@ namespace SDSFoundation.Model.Security.Configuration.ConfigurationProviders.Wind
             //Set the commandLineOptions to equal the fileOptions settings - this merges the two
             commandLineOptions.AuthorizationServer = fileOptions.AuthorizationServer;
             commandLineOptions.ClientId = fileOptions.ClientId;
+            commandLineOptions.Configuration = fileOptions.Configuration;
             commandLineOptions.ClientSecret = fileOptions.ClientSecret;
             commandLineOptions.DeviceId = fileOptions.DeviceId;
             commandLineOptions.Password = fileOptions.Password;
@@ -225,6 +232,31 @@ namespace SDSFoundation.Model.Security.Configuration.ConfigurationProviders.Wind
                 if (!string.IsNullOrWhiteSpace(commandLineOptions.SiteId)) secretsDictionary.Add("SiteId", commandLineOptions.SiteId);
                 if (!string.IsNullOrWhiteSpace(commandLineOptions.UserName)) secretsDictionary.Add("UserName", commandLineOptions.UserName);
                 if (!string.IsNullOrWhiteSpace(commandLineOptions.TenantId)) secretsDictionary.Add("TenantId", commandLineOptions.TenantId);
+
+                if (!string.IsNullOrWhiteSpace(commandLineOptions.Configuration))
+                {
+
+                    var configurationSettings = commandLineOptions.Configuration.Split(',').ToList();
+                 
+                    if(configurationSettings != null && configurationSettings.Count > 0)
+                    {
+                        foreach (var configurationSetting in configurationSettings)
+                        {
+                            var configurationSettingSplit = configurationSetting.Split(':').ToList();
+                            if(configurationSettingSplit != null && configurationSettingSplit.Count == 2)
+                            {
+                                var configurationKey = configurationSettingSplit[0];
+                                var configurationVal = configurationSettingSplit[1];
+
+                                if (!secretsDictionary.ContainsKey(configurationKey))
+                                {
+                                    secretsDictionary.Add(configurationKey, configurationVal);
+                                }
+                            }
+                        }
+                    }
+
+                }
             } 
 
             return secretsDictionary;

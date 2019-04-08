@@ -11,6 +11,19 @@ namespace SDSFoundation.Security.OpenIdDict.Tests
     public class CommandLineOptionTests : SecureProgram<CommandLineOptionTests>
     {
 
+        [TestMethod]
+        public void GetAuthorizedTenantDeviceUserSitesQuerySearchAction()
+        {
+            Initialize(new List<string>().ToArray());
+
+            Dictionary<string, string> para = new Dictionary<string, string>();
+            para.Add("UserName", UserName);
+            para.Add("DeviceTypeName", "Services");
+
+            var result = ExecuteSecureAction("GetAuthorizedTenantDeviceUserSitesQuery", para);
+
+        }
+
         //[TestMethod]
         //public void ConvertOptionsToToken()
         //{

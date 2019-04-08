@@ -14,6 +14,7 @@ using System.Xml;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Diagnostics;
+using Newtonsoft.Json.Linq;
 
 namespace SDSFoundation.Security.OpenIdDict.Base.Windows
 {
@@ -143,6 +144,34 @@ namespace SDSFoundation.Security.OpenIdDict.Base.Windows
             hasValidCredentialsTask.Wait();
 
             Claims = PasswordFlowTokenCache.Instance.GetTokenClaims(ClientId, hasValidCredentialsTask.Result);
+        }
+
+
+
+        /// <summary>
+        /// Returns a json string
+        /// </summary>
+        /// <param name="actionName"></param>
+        /// <param name="actionParameters"></param>
+        /// <param name="tokenExpirationSeconds"></param>
+        /// <param name="ignoreInvalidCertificate"></param>
+        /// <returns></returns>
+        public static string ExecuteSecureAction(string actionName, Dictionary<string, string> actionParameters = null, int tokenExpirationSeconds = 3600, bool ignoreInvalidCertificate = false)
+        {
+            var credentials = new PasswordFlowCredentials(
+                  tenantId: TenantId,
+                  clientId: ClientId,
+                  clientSecret: ClientSecret,
+                  email: UserName,
+                  password: Password,
+                  siteId: SiteId,
+                  deviceId: DeviceId);
+
+            var passwordFlow = new PasswordFlow(credentials, AuthorizationServer, tokenExpirationSeconds, ignoreInvalidCertificate);
+           
+            var result = passwordFlow.ExecuteSecureAction(credentials, actionName, actionParameters);
+            result.Wait();
+            return result.Result;
         }
 
         protected static string GetSetting(string path, string settingName)

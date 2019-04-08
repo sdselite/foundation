@@ -31,6 +31,8 @@ namespace SDSFoundation.Base.AspNetCore
             Configuration = configuration;
         }
 
+  
+
         public IConfiguration Configuration { get; protected set; }
 
         public AuthenticationBuilder ConfigureAuthenticationServices(IServiceCollection services, string loginPath = "/signin")

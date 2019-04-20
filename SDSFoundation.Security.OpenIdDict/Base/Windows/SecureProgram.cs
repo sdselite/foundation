@@ -23,7 +23,7 @@ namespace SDSFoundation.Security.OpenIdDict.Base.Windows
     /// </summary>
     public class SecureProgram<TProgram>
     {
-        private static IConfigurationRoot Configuration;
+        public static IConfigurationRoot Configuration { get; set; }
 
         public static string GetApplicationSetting(string settingName)
         {
@@ -156,8 +156,10 @@ namespace SDSFoundation.Security.OpenIdDict.Base.Windows
         /// <param name="tokenExpirationSeconds"></param>
         /// <param name="ignoreInvalidCertificate"></param>
         /// <returns></returns>
-        public static string ExecuteSecureAction(string actionName, Dictionary<string, string> actionParameters = null, int tokenExpirationSeconds = 3600, bool ignoreInvalidCertificate = false)
+        public static string ExecuteSecureAction(ClaimsPrincipal principal, string actionName, Dictionary<string, string> actionParameters = null, int tokenExpirationSeconds = 3600, bool ignoreInvalidCertificate = false)
         {
+            if (!principal.Identity.IsAuthenticated) throw new Exception("User is not authenticated!  Unable to execute action!");
+
             var credentials = new PasswordFlowCredentials(
                   tenantId: TenantId,
                   clientId: ClientId,
@@ -174,20 +176,41 @@ namespace SDSFoundation.Security.OpenIdDict.Base.Windows
             return result.Result;
         }
 
+        /// <summary>
+        /// Gets a combination of local and encrypted settings.  Local settings are used over encrypted setting.
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="settingName"></param>
+        /// <returns></returns>
         protected static string GetSetting(string path, string settingName)
         {
             try
             {
+                var result = string.Empty;
+
+
                 if (Configuration != null)
                 {
-                    var result = Configuration.AsEnumerable().Where(x => x.Key == string.Format("{0}:{1}", path, settingName)).Select(x => x.Value).FirstOrDefault();
+                    try
+                    {
+                        result = Configuration.AsEnumerable().Where(x => x.Key == string.Format("{0}:{1}", path, settingName)).Select(x => x.Value).FirstOrDefault();
+                    }
+                    catch (Exception)
+                    {
 
-                    return result;
+                    }
                 }
-                else
-                {
-                    return string.Empty;
-                }
+
+                //if(string.IsNullOrWhiteSpace(result) && EncryptedConfiguration != null)
+                //{
+                //    if (EncryptedConfiguration.ContainsKey(settingName))
+                //    {
+                //        result = EncryptedConfiguration[settingName];
+                //    }
+                //}
+
+
+                return result;
             }
             catch (Exception ex)
             {
@@ -280,6 +303,60 @@ namespace SDSFoundation.Security.OpenIdDict.Base.Windows
             get
             {
                 return GetSetting("ClientId");
+            }
+        }
+
+        //public static Dictionary<string, string> EncryptedConfiguration
+        //{
+        //    get
+        //    {
+        //        var result = new Dictionary<string, string>();
+        //        var configString = GetSetting("Configuration");
+
+        //        if (!string.IsNullOrWhiteSpace(configString))
+        //        {
+        //            var settingsSplit = configString.Split(',')?.ToList();
+        //            if(settingsSplit != null && settingsSplit.Count > 0)
+        //            {
+        //                foreach (var setting in settingsSplit)
+        //                {
+        //                    var settingSplit = setting.Split(',')?.ToList();
+        //                    if(settingSplit != null && settingSplit.Count == 2)
+        //                    {
+        //                        result.Add(settingSplit[0], settingSplit[1]);
+        //                    }
+        //                }
+        //            }
+                    
+        //        }
+        //        //customSettingsStr = customSettingsStr + $(val).attr("settingName") + ':' + $(val).val() + ",";
+
+        //        return result;
+        //    }
+        //}
+
+        //Configuration
+
+
+        public static Dictionary<string, string> SettingsDictionary
+        {
+            get
+            {
+                Dictionary<string, string> result = new Dictionary<string, string>();
+                var keyValuePairs = Configuration.AsEnumerable().Select(x => new { Key = x.Key, Value = x.Value }).ToList();
+
+                if(keyValuePairs != null && keyValuePairs.Count > 0)
+                {
+                    foreach (var keyValuePair in keyValuePairs)
+                    {
+                        if (!string.IsNullOrWhiteSpace(keyValuePair.Value))
+                        {
+                            result.Add(keyValuePair.Key, keyValuePair.Value);
+                        }
+                    }
+                }
+
+                return result;
             }
         }
 

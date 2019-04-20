@@ -4,9 +4,23 @@ using SDSFoundation.ExtensionMethods.NetStandard.Serialization;
 using System.Collections.Generic;
 using SDSFoundation.Security.OpenIdDict.Flows.Password;
 using SDSFoundation.Security.OpenIdDict.Base.Windows;
+using System.Security.Principal;
 
 namespace SDSFoundation.Security.OpenIdDict.Tests
 {
+    public class TestIdentity : IIdentity
+    {
+        public TestIdentity(string name, bool isAuthenticated = true, string authenticationType = "UnitTesting")
+        {
+            this.IsAuthenticated = isAuthenticated;
+            this.AuthenticationType = authenticationType;
+            this.Name = name;
+        }
+        public string AuthenticationType { get; set; } = "UnitTesting";
+        public bool IsAuthenticated { get; set; } = false;
+        public string Name { get; set; } = "TestUser";
+    }
+
     [TestClass]
     public class CommandLineOptionTests : SecureProgram<CommandLineOptionTests>
     {
@@ -20,7 +34,22 @@ namespace SDSFoundation.Security.OpenIdDict.Tests
             para.Add("UserName", UserName);
             para.Add("DeviceTypeName", "Services");
 
-            var result = ExecuteSecureAction("GetAuthorizedTenantDeviceUserSitesQuery", para);
+            var result = ExecuteSecureAction(new System.Security.Claims.ClaimsPrincipal(new TestIdentity(UserName)), "GetAuthorizedTenantDeviceUserSitesQuery", para);
+
+        }
+
+        [TestMethod]
+        public void GetAuthorizedTenantDevicePeripheralsQuerySearchAction()
+        {
+            Initialize(new List<string>().ToArray());
+
+            Dictionary<string, string> para = new Dictionary<string, string>();
+            para.Add("UserName", UserName);
+            para.Add("TenantDeviceId", "");
+            para.Add("PeripheralTypeName", "");
+            para.Add("IncludeSensitiveData", "false");
+
+            var result = ExecuteSecureAction(new System.Security.Claims.ClaimsPrincipal(new TestIdentity(UserName)), "GetAuthorizedTenantDevicePeripheralsQuery", para);
 
         }
 
@@ -60,6 +89,8 @@ namespace SDSFoundation.Security.OpenIdDict.Tests
             //var args = new List<string>() { "--r", "true" }.ToArray();
             var args = new List<string>().ToArray();
             var commandLineOptions = Initialize(args: args, appSettingsFileName: "appsettings.json", maximumLicenseAge: 12);
+
+            var settingsDictionary = SettingsDictionary;
             Login(tokenExpirationSeconds: 3600, ignoreInvalidCertificate: true);
 
             //var runTask = Run<ExampleService>();

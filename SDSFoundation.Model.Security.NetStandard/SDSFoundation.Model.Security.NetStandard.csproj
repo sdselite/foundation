@@ -12,12 +12,12 @@ Added support for custom security settings
 Added "Console" option to configuration options.
 Removing ServiceBase and switching to TopHost
 Updated to support file system path in ASP.NET Core.</PackageReleaseNotes>
-    <Version>1.0.6.16</Version>
+    <Version>1.0.6.17</Version>
     <PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
     <Company>SDSFoundation.Model.Security.NetStandard</Company>
     <Authors>SDSFoundation.Model.Security.NetStandard</Authors>
     <RootNamespace>SDSFoundation.Model.Security</RootNamespace>
-    <AssemblyVersion>1.0.6.16</AssemblyVersion>
+    <AssemblyVersion>1.0.6.17</AssemblyVersion>
   </PropertyGroup>
 
   <ItemGroup>

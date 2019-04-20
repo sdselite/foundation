@@ -24,6 +24,7 @@ namespace SDSFoundation.Model.Schedule.NetStandard.Core.UnitTests
         {
             Initialize(new List<string>().ToArray(), appSettingsFileName: "appsettings.json", maximumLicenseAge: 12);
 
+            var test = Configuration;
             //LogInfo("Logging In.");
             //Login(tokenExpirationSeconds: 3600, ignoreInvalidCertificate: IgnoreInvalidSSLCert);
             //LogInfo("Log In Successful.");

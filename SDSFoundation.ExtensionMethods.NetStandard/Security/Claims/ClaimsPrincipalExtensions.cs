@@ -25,6 +25,10 @@ namespace SDSFoundation.ExtensionMethods.Security.Claims
             return ValidateClaim(principal, enumVal.ToString(), value);
         }
 
+        public static string Tenant(this ClaimsPrincipal user)
+        {
+            return user.Claims?.Where(x => x.Type.ToLower().Trim() == "tenants").FirstOrDefault()?.Value;
+        }
 
         private static bool ValidateClaim(ClaimsPrincipal principal, string name, string value)
         {

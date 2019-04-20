@@ -44,6 +44,13 @@ namespace SDSFoundation.ExtensionMethods.Network
         }
 
 
+        public static List<string> GetIpAddressesOnLocalNetwork(int timeout)
+        {
+            DeviceDiscovery deviceDiscovery = new DeviceDiscovery();
+
+            return deviceDiscovery.GetIPAddresses(timeout);
+        }
+
         public static string GetIPFromString(string url)
         {
             try

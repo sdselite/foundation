@@ -7,42 +7,28 @@ namespace SDSFoundation.Model.Security.Policies
 {
     public class PasswordPolicy
     {
-        private static int Minimum_Length = 7;
-        private static int Upper_Case_length = 1;
-        private static int Lower_Case_length = 1;
-        private static int NonAlpha_length = 1;
+        /// <summary>
+        /// Checks if the password created is valid
+        /// </summary>
+        /// <param name="includeLowercase">Bool to say if lowercase are required</param>
+        /// <param name="includeUppercase">Bool to say if uppercase are required</param>
+        /// <param name="includeNumeric">Bool to say if numerics are required</param>
+        /// <param name="includeSpecial">Bool to say if special characters are required</param>
+        /// <param name="password">Generated password</param>
+        /// <returns>True or False to say if the password is valid or not</returns>
+        public static bool IsValid(bool includeLowercase, bool includeUppercase, bool includeNumeric, bool includeSpecial, string password)
+        {
+            const string REGEX_LOWERCASE = @"[a-z]";
+            const string REGEX_UPPERCASE = @"[A-Z]";
+            const string REGEX_NUMERIC = @"[\d]";
+            const string REGEX_SPECIAL = @"([!#$%&*@\\])+";
 
-        public static bool IsValid(string Password)
-        {
-            if (Password.Length < Minimum_Length)
-                return false;
-            if (UpperCaseCount(Password) < Upper_Case_length)
-                return false;
-            if (LowerCaseCount(Password) < Lower_Case_length)
-                return false;
-            if (NumericCount(Password) < 1)
-                return false;
-            if (NonAlphaCount(Password) < NonAlpha_length)
-                return false;
-            return true;
-        }
+            bool lowerCaseIsValid = !includeLowercase || (includeLowercase && Regex.IsMatch(password, REGEX_LOWERCASE));
+            bool upperCaseIsValid = !includeUppercase || (includeUppercase && Regex.IsMatch(password, REGEX_UPPERCASE));
+            bool numericIsValid = !includeNumeric || (includeNumeric && Regex.IsMatch(password, REGEX_NUMERIC));
+            bool symbolsAreValid = !includeSpecial || (includeSpecial && Regex.IsMatch(password, REGEX_SPECIAL));
 
-        private static int UpperCaseCount(string Password)
-        {
-            return Regex.Matches(Password, "[A-Z]").Count;
-        }
-
-        private static int LowerCaseCount(string Password)
-        {
-            return Regex.Matches(Password, "[a-z]").Count;
-        }
-        private static int NumericCount(string Password)
-        {
-            return Regex.Matches(Password, "[0-9]").Count;
-        }
-        private static int NonAlphaCount(string Password)
-        {
-            return Regex.Matches(Password, @"[^0-9a-zA-Z\._]").Count;
+            return lowerCaseIsValid && upperCaseIsValid && numericIsValid && symbolsAreValid;
         }
     }
 }

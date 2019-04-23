@@ -14,9 +14,10 @@ namespace SDSFoundation.Model.Security.Policies
         /// <param name="includeUppercase">Bool to say if uppercase are required</param>
         /// <param name="includeNumeric">Bool to say if numerics are required</param>
         /// <param name="includeSpecial">Bool to say if special characters are required</param>
+        /// <param name="minimumLength">Minimum length of a password</param>
         /// <param name="password">Generated password</param>
         /// <returns>True or False to say if the password is valid or not</returns>
-        public static bool IsValid(bool includeLowercase, bool includeUppercase, bool includeNumeric, bool includeSpecial, string password)
+        public static bool IsValid(bool includeLowercase, bool includeUppercase, bool includeNumeric, bool includeSpecial, int minimumLength, string password)
         {
             const string REGEX_LOWERCASE = @"[a-z]";
             const string REGEX_UPPERCASE = @"[A-Z]";
@@ -28,7 +29,16 @@ namespace SDSFoundation.Model.Security.Policies
             bool numericIsValid = !includeNumeric || (includeNumeric && Regex.IsMatch(password, REGEX_NUMERIC));
             bool symbolsAreValid = !includeSpecial || (includeSpecial && Regex.IsMatch(password, REGEX_SPECIAL));
 
+            //Validate length
+            if(string.IsNullOrWhiteSpace(password) || password.Length < minimumLength)
+            {
+                return false;
+            }
+
             return lowerCaseIsValid && upperCaseIsValid && numericIsValid && symbolsAreValid;
         }
+
+
+ 
     }
 }

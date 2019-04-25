@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Version>1.0.1.11</Version>
+    <Version>1.0.1.12</Version>
     <Product>SDSFoundation.Model.Schedule.NetStandard</Product>
     <Description>Added helper method for the purpose of chaining jobs</Description>
     <PackageId>SDSFoundation.Model.Schedule.NetStandard</PackageId>

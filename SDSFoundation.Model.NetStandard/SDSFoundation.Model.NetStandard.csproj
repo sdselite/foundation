@@ -3,6 +3,16 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <RootNamespace>SDSFoundation.Model</RootNamespace>
+    <Product>SDSFoundation.Model.NetStandard</Product>
+    <Description>Foundation model objects</Description>
+    <PackageId>SDSFoundation.Model.NetStandard</PackageId>
+    <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
+    <PackageReleaseNotes>Consolidated objects into a single project.  It was getting unmaintainable.
+Removed projects from the solution.</PackageReleaseNotes>
+    <Version>1.0.0</Version>
+    <PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
+    <Company>SDSFoundation.Model.NetStandard</Company>
+    <Authors>SDSFoundation.Model.NetStandard</Authors>
   </PropertyGroup>
 
 </Project>

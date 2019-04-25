@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
 
-namespace SDSFoundation.Model.Schedule.NetStandard.Enumerations
+namespace SDSFoundation.Model.Enumerations.Schedule
 {
     /// <summary>
     /// Use extension method to get the string value:   public static string ToDescriptionString(this Timezones val)

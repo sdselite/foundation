@@ -119,10 +119,6 @@
       <Project>{4C7B55FA-7380-47E2-B7A3-248E0ABE3CAF}</Project>
       <Name>SDSFoundation.Interop.ActiveX.UserControl.Wrapper</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SDSFoundation.Model.Content\SDSFoundation.Model.Content.csproj">
-      <Project>{0b8d46de-b1b8-4ae8-9353-22ac4736021f}</Project>
-      <Name>SDSFoundation.Model.Content</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="UnifiedPlayer.resx">

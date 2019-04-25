@@ -26,4 +26,8 @@ Added method to create a scheduler based on parameters provided</PackageReleaseN
     <PackageReference Include="System.Runtime.Loader" Version="4.3.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\SDSFoundation.Model.NetStandard\SDSFoundation.Model.NetStandard.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace SDSFoundation.Model.Schedule.NetStandard.Enumerations
+namespace SDSFoundation.Model.Enumerations.Schedule
 {
     public enum ScheduleTypes
     {

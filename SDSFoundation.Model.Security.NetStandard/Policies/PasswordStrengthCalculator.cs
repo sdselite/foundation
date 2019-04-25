@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
-using SDSFoundation.Model.Security.Enumerations;
+using SDSFoundation.Model.Enumerations.Security;
 
 namespace SDSFoundation.Model.Security.Policies
 {

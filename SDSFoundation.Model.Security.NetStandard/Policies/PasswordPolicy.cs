@@ -38,7 +38,25 @@ namespace SDSFoundation.Model.Security.Policies
             return lowerCaseIsValid && upperCaseIsValid && numericIsValid && symbolsAreValid;
         }
 
+        /// <summary>
+        /// Checks if the password created is valid
+        /// </summary>
+        /// <param name="passwordPolicySettings"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
+        public static bool IsValid(PasswordPolicySettings passwordPolicySettings, string password)
+        {
+            return IsValid(
+                passwordPolicySettings.DevicePasswordRequiresLowercase,
+                passwordPolicySettings.DevicePasswordRequiresUppercase,
+                passwordPolicySettings.DevicePasswordRequiresNumeric,
+                passwordPolicySettings.DevicePasswordRequiresSpecial,
+                passwordPolicySettings.DevicePasswordMinimumLength,
+                password
+                );
+        }
 
- 
-    }
+
+
+        }
 }

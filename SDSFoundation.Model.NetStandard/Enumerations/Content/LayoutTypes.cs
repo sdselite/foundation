@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 
-namespace SDSFoundation.Model.Content.Enumerations
+namespace SDSFoundation.Model.Enumerations.Content
 {
     public enum LayoutTypes
     {
@@ -25,4 +24,3 @@ namespace SDSFoundation.Model.Content.Enumerations
         Uniform
     }
 }
-

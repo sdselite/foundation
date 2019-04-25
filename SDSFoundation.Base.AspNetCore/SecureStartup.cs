@@ -7,7 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Newtonsoft.Json.Linq;
-using SDSFoundation.Model.Security.Enumerations;
+using SDSFoundation.Model.Enumerations.Security;
 using SDSFoundation.Security.OpenIdDict.Base.Windows;
 using System;
 using System.Collections.Generic;

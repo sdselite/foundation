@@ -1,5 +1,8 @@
-﻿ 
-namespace SDSFoundation.Model.Security.Enumerations
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace SDSFoundation.Model.Enumerations.Security
 {
     public enum ClaimType
     {

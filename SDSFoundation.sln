@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27703.2026
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28803.156
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SDSFoundation.ExtensionMethods", "SDSFoundation.ExtensionMethods\SDSFoundation.ExtensionMethods.csproj", "{93F70805-FC21-438B-A251-06F8673F006E}"
 EndProject
@@ -10,8 +10,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SDSFoundation.Interfaces.Content", "SDS.Interfaces.Content\SDSFoundation.Interfaces.Content.csproj", "{9F71C068-792A-4C22-BCCD-BDDEC9B246F3}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Model", "Model", "{3B2C4138-7A34-44B7-9A25-2988BB31A7D5}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SDSFoundation.Model.Content", "SDSFoundation.Model.Content\SDSFoundation.Model.Content.csproj", "{0B8D46DE-B1B8-4AE8-9353-22AC4736021F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ExtensionMethods", "ExtensionMethods", "{F94B5248-43AA-46D9-8004-C69DD719DC43}"
 EndProject
@@ -44,8 +42,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SDSFoundation.Interop.ActiveX.Manufacturer.Geovision.Demo", "SDSFoundation.Interop.ActiveX.Manufacturer.Geovision.Demo\SDSFoundation.Interop.ActiveX.Manufacturer.Geovision.Demo.csproj", "{7CC6AEAB-DAC3-429E-B6FE-1A2E554A86A6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SDSFoundation.Interfaces.Interop.ActiveX", "SDSFoundation.Interfaces.Interop.ActiveX\SDSFoundation.Interfaces.Interop.ActiveX.csproj", "{ACCBEBB1-69B0-4854-81A5-08A19AD6C588}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SDSFoundation.Model.Device", "SDSFoundation.Model.Device\SDSFoundation.Model.Device.csproj", "{B408DE6A-3EEC-4A6B-B580-2AC644B1F60B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SDSFoundation.Interfaces.Device", "SDSFoundation.Interfaces.Device\SDSFoundation.Interfaces.Device.csproj", "{58A7D8C0-2615-4B68-B221-F33286A57475}"
 EndProject
@@ -81,7 +77,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SDSFoundation.Base.AspNetCo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SDSFoundation.Security.OpenIdDict.IntegrationTestSite", "SDSFoundation.Security.OpenIdDict.IntegrationTestSite\SDSFoundation.Security.OpenIdDict.IntegrationTestSite.csproj", "{F6EDD066-C8DC-447A-8D52-98DA1D775DC5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SDSFoundation.Model.Schedule.NetStandard.Core.UnitTests", "SDSFoundation.Model.Schedule.NetStandard.Core.UnitTests\SDSFoundation.Model.Schedule.NetStandard.Core.UnitTests.csproj", "{02C93C23-5CD0-47A6-9EE2-EFB6260D5581}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SDSFoundation.Model.Schedule.NetStandard.Core.UnitTests", "SDSFoundation.Model.Schedule.NetStandard.Core.UnitTests\SDSFoundation.Model.Schedule.NetStandard.Core.UnitTests.csproj", "{02C93C23-5CD0-47A6-9EE2-EFB6260D5581}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SDSFoundation.Model.NetStandard", "SDSFoundation.Model.NetStandard\SDSFoundation.Model.NetStandard.csproj", "{347DE496-4099-48F6-B55C-AB2EF8C291AD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -97,10 +95,6 @@ Global
 		{9F71C068-792A-4C22-BCCD-BDDEC9B246F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9F71C068-792A-4C22-BCCD-BDDEC9B246F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9F71C068-792A-4C22-BCCD-BDDEC9B246F3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0B8D46DE-B1B8-4AE8-9353-22AC4736021F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0B8D46DE-B1B8-4AE8-9353-22AC4736021F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0B8D46DE-B1B8-4AE8-9353-22AC4736021F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0B8D46DE-B1B8-4AE8-9353-22AC4736021F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{63FACD31-EA50-4EB6-B290-FCAC453C32CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{63FACD31-EA50-4EB6-B290-FCAC453C32CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{63FACD31-EA50-4EB6-B290-FCAC453C32CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -121,10 +115,6 @@ Global
 		{ACCBEBB1-69B0-4854-81A5-08A19AD6C588}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ACCBEBB1-69B0-4854-81A5-08A19AD6C588}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ACCBEBB1-69B0-4854-81A5-08A19AD6C588}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B408DE6A-3EEC-4A6B-B580-2AC644B1F60B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B408DE6A-3EEC-4A6B-B580-2AC644B1F60B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B408DE6A-3EEC-4A6B-B580-2AC644B1F60B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B408DE6A-3EEC-4A6B-B580-2AC644B1F60B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{58A7D8C0-2615-4B68-B221-F33286A57475}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{58A7D8C0-2615-4B68-B221-F33286A57475}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{58A7D8C0-2615-4B68-B221-F33286A57475}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -185,6 +175,10 @@ Global
 		{02C93C23-5CD0-47A6-9EE2-EFB6260D5581}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{02C93C23-5CD0-47A6-9EE2-EFB6260D5581}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{02C93C23-5CD0-47A6-9EE2-EFB6260D5581}.Release|Any CPU.Build.0 = Release|Any CPU
+		{347DE496-4099-48F6-B55C-AB2EF8C291AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{347DE496-4099-48F6-B55C-AB2EF8C291AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{347DE496-4099-48F6-B55C-AB2EF8C291AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{347DE496-4099-48F6-B55C-AB2EF8C291AD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -192,7 +186,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{93F70805-FC21-438B-A251-06F8673F006E} = {F94B5248-43AA-46D9-8004-C69DD719DC43}
 		{9F71C068-792A-4C22-BCCD-BDDEC9B246F3} = {D366F385-2FAB-4FD7-AF05-C3CD07C690B3}
-		{0B8D46DE-B1B8-4AE8-9353-22AC4736021F} = {3B2C4138-7A34-44B7-9A25-2988BB31A7D5}
 		{3AF938B5-D1D4-4EF4-BD48-B1EE30E8C4D4} = {81C6A6CD-71E5-41F8-A6A0-B8F98670B24C}
 		{02CB3DF5-BF44-4E8B-96D1-E4A2E539F6AD} = {81C6A6CD-71E5-41F8-A6A0-B8F98670B24C}
 		{B1ADB7D6-4FDA-4FFE-97B7-901B8EEB1A9F} = {3AF938B5-D1D4-4EF4-BD48-B1EE30E8C4D4}
@@ -206,7 +199,6 @@ Global
 		{E07CA892-C03A-404E-85A5-3618AB021AB0} = {855F23AF-0152-461E-AFE8-394BC49B62EC}
 		{7CC6AEAB-DAC3-429E-B6FE-1A2E554A86A6} = {855F23AF-0152-461E-AFE8-394BC49B62EC}
 		{ACCBEBB1-69B0-4854-81A5-08A19AD6C588} = {D366F385-2FAB-4FD7-AF05-C3CD07C690B3}
-		{B408DE6A-3EEC-4A6B-B580-2AC644B1F60B} = {3B2C4138-7A34-44B7-9A25-2988BB31A7D5}
 		{58A7D8C0-2615-4B68-B221-F33286A57475} = {D366F385-2FAB-4FD7-AF05-C3CD07C690B3}
 		{C5B3A198-2508-4D1B-87FF-73C4C97385D8} = {D366F385-2FAB-4FD7-AF05-C3CD07C690B3}
 		{FBCD4345-EC07-44B1-9D4A-70E77ACDBA96} = {D366F385-2FAB-4FD7-AF05-C3CD07C690B3}
@@ -223,6 +215,7 @@ Global
 		{E7C99BF2-B8F6-4FEE-AEE5-A01FB74CCEAE} = {CBE8C787-B637-4F52-8E5C-BEA9004D0269}
 		{F6EDD066-C8DC-447A-8D52-98DA1D775DC5} = {6F3CD7C3-91BB-40FF-A70A-848626E8AE5C}
 		{02C93C23-5CD0-47A6-9EE2-EFB6260D5581} = {3B2C4138-7A34-44B7-9A25-2988BB31A7D5}
+		{347DE496-4099-48F6-B55C-AB2EF8C291AD} = {3B2C4138-7A34-44B7-9A25-2988BB31A7D5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1296FF46-890B-49D5-BF55-A83F66BF21DA}

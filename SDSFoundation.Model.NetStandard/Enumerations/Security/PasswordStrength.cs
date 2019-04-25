@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace SDSFoundation.Model.Security.Enumerations
+namespace SDSFoundation.Model.Enumerations.Security
 {
     public enum PasswordStrength
     {
@@ -31,5 +31,4 @@ namespace SDSFoundation.Model.Security.Enumerations
         /// </summary>
         VeryStrong = 5
     }
-
 }
